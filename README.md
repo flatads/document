@@ -56,7 +56,6 @@
 > Revenue：广告收益
 
 # Android SDK
-### 下载Flat Ads Android SDK
 ### 添加依赖和初始化
 添加依赖
 
@@ -87,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
 初始化SDK时，需要传入APP的appid和token，这两个值可以在你的账户后台Placement管理页面中找到
  ![Alt text](./1621243376897.png)
 
-
-### 修改日志
 
 ### 广告位类型
 #### Banner 
@@ -478,12 +475,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 ```
-#### Rewarded Ad
-
-### 测试集成
 
 ### 更多说明
-#### GDPR
+
 ####  注意事项
 1、接入时需对app开启存储权限后才可以正常下载广告配置的apk，否则部分手机将无下载反应。
 2、混淆时，需添加 -keep class com.flatads.sdk.response.* {*;} ，否则将无数据返回。
@@ -491,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
 4、插屏广告需要注册回调监听且在onAdLoaded中调用showAd方法展示广告，否则将无法正常显示广告
 
 # IOS SDK
-### 下载Flat Ads IOS SDK
+
 ### 添加依赖
 添加 Cocoapods 源
 ```
@@ -562,7 +556,6 @@ if (@available(iOS 14, *)) {
 #endif
 ```
  
-### 修改日志
 
 ### 广告位类型
 #### Banner 
@@ -706,31 +699,12 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 - (void)interstitialAdDidClosed:(nonnull FAInterstitialAd *)interstitialAd;
 ```
 
-#### Rewarded Ad
-
-### 测试集成
-
 ### 更多说明
-#### GDPR
+
 ####  注意事项
 1. 必须要设置 rootViewController，用来处理广告跳转。SDK里所有的跳转均采用 present 的方式，请确保传入的 rootViewController 不能为空且没有 present 其他的控制器，否则会出现 presentedViewController 已经存在而导致 present 失败。
 2. 判断广告素材是否准备好直接使用 isAdReady 判断即可
 
-# Unity 插件
-### 下载Flat Ads Unity 插件
-### 初始化
-### 修改日志
-
-### 广告位类型
-#### Banner 
-#### Interstitial
-#### Rewarded Ad
-
-### 测试集成
-
-### 更多说明
-#### GDPR
-####  注意事项
 
 # COCOS Creator集成 Flat Ads SDK
 
@@ -766,7 +740,7 @@ compileOptions {
 ```
 FlatAdSdk.initSdk(appId, appToken);
 ```
-### 修改日志
+
 
 ### 广告位类型
 #### Banner 
@@ -848,81 +822,76 @@ onNativeAdClose : function (uitId, info);
 ```
 FlatNativeAd.showAd(unitId);
 ```
-#### Rewarded Ad
 
-### 测试集成
 
-### 更多说明
-#### GDPR
-####  注意事项
 
 # 广告响应参数说明
 广告日志TAG：adReq
 ### 返回参数列表
-| 参数名| 类型 |说明|
-| :-----| :-----|
-|imp_id|string|展示id
-|unitid|string|广告位id
-|platform|string|dsp名称
-|campaign_id|string|广告机会id
-|creative_id|string|素材id
-|ad_type|string|广告类型： NATIVE BANNER VIDEO
-|action|string|点击广告动作类型（配合link使用），browser:在浏览器打开, market:在google play打开, apk:在端内打开
-|title|string|标题
-|desc|string|描述
-|app_bundle|string|包名
-|deep_link|string|深度链接（点击广告后如果已经安装，需要跳转到的app内指定页面，如果未安装需要安装后跳转到deeplink指定的页面）
-|app_ver|string|被推广的app版本
-|link|string|广告链接（点击广告跳转的路径，如果是vast 需要终端从协议中解析出<ClickThrough>）
-|ad_btn|string|按钮文案
-|refresh_interval|int|刷新时间间隔
-|req_id|string|请求id
-|imp_trackers|字符串数组|展示追踪链数组（广告展示时调用）
-|click_trackers|字符串数组|点击追踪链数组（用户点击广告时调用）
-|image|object|图片object
-|icon|object|icon object
-|video|object|video object
-|app_icon|string|被推广的app的图标
-|win_dsp_id|string|胜出的dsp id
-|app_size|string|被推广的app大小
-|app_category|string|被推广的app分类
-|advertiser_name|string|被推广包的广告主名称
-|html|string|html内容
-|is_mute|int|是否静音 0否 1是
-|refresh_time|int|刷新时间间隔的秒数 0 不刷新
-|is_cta|int|是否需要cta点击 0否 1是
-|cta_desc|string|cta点击描述
-|skip_after|int|允许跳过广告的最小秒数
-|xml|string|vast协议内容
-|show_type|string|html static video vast playable
+|参数名|类型|说明|
+|:-----|:-----|
+|imp_id|string|展示id|
+|unitid|string|广告位id|
+|platform|string|dsp名称|
+|campaign_id|string|广告机会id|
+|creative_id|string|素材id|
+|ad_type|string|广告类型： NATIVE BANNER VIDEO|
+|action|string|点击广告动作类型（配合link使用），browser:在浏览器打开, market:在google play打开, apk:在端内打开|
+|title|string|标题|
+|desc|string|描述|
+|app_bundle|string|包名|
+|deep_link|string|深度链接（点击广告后如果已经安装，需要跳转到的app内指定页面，如果未安装需要安装后跳转到deeplink指定的页面）|
+|app_ver|string|被推广的app版本|
+|link|string|广告链接（点击广告跳转的路径，如果是vast 需要终端从协议中解析出<ClickThrough>）|
+|ad_btn|string|按钮文案|
+|refresh_interval|int|刷新时间间隔|
+|req_id|string|请求id|
+|imp_trackers|字符串数组|展示追踪链数组（广告展示时调用）|
+|click_trackers|字符串数组|点击追踪链数组（用户点击广告时调用）|
+|image|object|图片object|
+|icon|object|icon object|
+|video|object|video object|
+|app_icon|string|被推广的app的图标|
+|win_dsp_id|string|胜出的dsp id|
+|app_size|string|被推广的app大小|
+|app_category|string|被推广的app分类|
+|advertiser_name|string|被推广包的广告主名称|
+|html|string|html内容|
+|is_mute|int|是否静音 0否 1是|
+|refresh_time|int|刷新时间间隔的秒数 0 不刷新|
+|is_cta|int|是否需要cta点击 0否 1是|
+|cta_desc|string|cta点击描述|
+|skip_after|int|允许跳过广告的最小秒数|
+|xml|string|vast协议内容|
+|show_type|string|html static video vast playable|
 
 **Icon & 图片**
-|参数|类型|说明
+|参数|类型|说明|
 |:---|:---|
-|url|string|资源链接
-|h|int|高
-|w|int|宽
+|url|string|资源链接|
+|h|int|高|
+|w|int|宽|
 
 **视频**
-|参数|类型|说明
+|参数|类型|说明|
 |:---|:---|
-|url|string|资源链接
-|h|int|高
-|w|int|宽
-|size|int|视频大小
-|duration|int|视频时长
-|ad_btn_jump_type|int
+|url|string|资源链接|
+|h|int|高|
+|w|int|宽|
+|size|int|视频大小|
+|duration|int|视频时长|
+|ad_btn_jump_type|int|
 
 
 
 ### 异常状态码
-| 状态码（status）| 说明 |描述（msg)|
-| :-----| :-----|
-| 40003|签名验证失败 |not validate|
-|40101|广告位不存在|Not bidding:tagid not actived
-|40102|adx 流控|request next time please
-|40103|没有匹配的广告返回|no ads from all dsps
-|40201 | 参数错误|empty appid or sign
+|状态码（status）| 说明 |描述（msg)|
+|:-----|:-----|
+|40003|签名验证失败 |not validate|
+|40101|广告位不存在|Not bidding:tagid not actived|
+|40102|adx 流控|request next time please|
+|40103|没有匹配的广告返回|no ads from all dsps|
+|40201 | 参数错误|empty appid or sign|
 
 
 
