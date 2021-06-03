@@ -1083,7 +1083,7 @@ FlatNativeAd.showAd(unitId);
 
 | 参数 | 类型 | 说明 |
 | ------------ | ------------ |
-| url |string | 资源链接 |
+| url | string | 资源链接 |
 | h | int | 高 |
 | w | int | 宽 |
 
