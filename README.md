@@ -4,10 +4,10 @@
 请联系您的客户经理为您创建Flat Ads 开发者账号。
 ### 创建APP和广告位
 1. 进入开发者后台后，您需要先为您的账号创建APP/Site及其Placement.
-![Alt text](./1620963109747.png)
+![Alt text](./flat_image/1620963109747.png)
 2. 进入新建弹窗，输入您APP的相关信息, 填写的字段释义如下
 
-![Alt text](./1620964293507.png)
+![Alt text](./flat_image/1620964293507.png)
 
 > Type: 流量类型是APP流量还是Web Site流量；
 > Platform：APP的系统平台，是Android还是IOS，如果是Windows之类的请选择其他；
@@ -21,7 +21,7 @@
 > TOKEN和Appid：为对接SDK时的验证密钥，新建APP后，自动生成。
 
 3. 完成APP/Site的填写后，保存继续为其创建广告位，填写的字段释义如下
-![Alt text](./1620964462690.png)
+![Alt text](./flat_image/1620964462690.png)
 
 > App/Site：当前创建广告位的归属，一个App/Site可以拥有多个广告位；
 > Name：广告位的名称，一般可以命名为"APPNAME_TYPE_SIZE"；
@@ -37,11 +37,11 @@
 
 ### 集成Flat Ads SDK
 保存广告位后，就可以进入集成SDK的环节。Flat Ads SDK支持Android，IOS，Unity, Cocos。同时如果您对接了Mopub聚合SDK，我们也只支持Mopub JS Tag作为自定义网盟接入。如果你是Site流量，也可以直接部署我们的JS Tag
-![Alt text](./1620983112998.png)
+![Alt text](./flat_image/1620983112998.png)
 
 ### 报表说明
 跑出数据后，可以通过报表查看收益数据情况，以下是维度指标的说明
-![Alt text](./1620989538211.png)
+![Alt text](./flat_image/1620989538211.png)
 
 > 维度
 > Date：日期
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 ```
 
 初始化SDK时，需要传入APP的appid和token，这两个值可以在你的账户后台Placement管理页面中找到
- ![Alt text](./1621243376897.png)
+ ![Alt text](./flat_image/1621243376897.png)
 
 
 ### 广告位类型
@@ -651,7 +651,7 @@ $ pod install
 $ pod install --repo-update
 ```
 命令执行成功后，会生成.xcworkspace文件，可以打开.xcworkspace来启动工程，如下图所示。
-![Alt text](./Flat_xcworkspace)
+![Alt text](./ios_image/Flat_xcworkspace)
 
 ####升级SDK
 升级SDK时，首先要更新repo库，执行命令：
@@ -673,7 +673,7 @@ $ pod install
 
 将解压缩后的 FlatAds_sdk 文件拖到工程文件夹中，然后在按下图所示选中这两项:
 
-![Flat_doc11](./Flat_doc11.png)
+![Flat_doc11](./ios_image/Flat_doc11.png)
 
 需要引入的系统依赖库
 
@@ -694,15 +694,15 @@ $ pod install
 其他设置
 在 Target->Build Settings -> Other Linker Flags 中添加 -ObjC (字母 o 和 c 大写)和 $(inherited) 。
 
-![Flat_doc12](./Flat_doc12.png)
+![Flat_doc12](./ios_image/Flat_doc12.png)
 
 在 Target->Build Phasses ->Link Binary With Libraries 中把 GoogleInteractiveMediaAds.framework 的 Status 改为 Optional 。
 
-![Flat_doc13](./Flat_doc13.png)
+![Flat_doc13](./ios_image/Flat_doc13.png)
 
 苹果公司在iOS9中升级了应用网络通信安全策略，默认推荐开发者使用HTTPS协议来进行网络通信，并限制HTTP协议的请求。为了避免出现无法拉取到广告的情况，我们推荐开发者在info.plist文件中增加如下配置来实现广告的网络访问：（信任HTTP请求）
 
-![Flat_doc14](./Flat_doc14.png)
+![Flat_doc14](./ios_image/Flat_doc14.png)
 
 
 ### IOS 14适配
@@ -766,7 +766,7 @@ if (@available(iOS 14, *)) {
 ```
 
 初始化SDK时，需要传入APP的appid和token，这两个值可以在你的账户后台Placement管理页面中找到
- ![Alt text](./1621243376897.png)
+ ![Alt text](./ios_image/1621243376897.png)
  
 **日志输出说明**
 ```objc
