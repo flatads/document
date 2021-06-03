@@ -524,15 +524,15 @@ end
 ```
 ####使用CocoaPods进行SDK部署
 通过CocoaPods安装SDK前，确保CocoaPods索引已经更新。可以通过运行以下命令来更新索引：
-```ruby
+```bash
 $ pod repo update
 ```
 运行命令进行安装：
-```ruby
+```bash
 $ pod install 
 ```
 也可以将上述两条命令合成为如下命令:
-```ruby
+```bash
 $ pod install --repo-update
 ```
 命令执行成功后，会生成.xcworkspace文件，可以打开.xcworkspace来启动工程，如下图所示。
@@ -540,11 +540,11 @@ $ pod install --repo-update
 
 ####升级SDK
 升级SDK时，首先要更新repo库，执行命令：
-```ruby
+```bash
 $ pod repo update
 ```
 之后重新执行如下命令进行安装即可升级至最新版SDK
-```
+```bash
 $ pod install
 ```
 **注意** ：请确保每次引入的都是SDK最新版本，以获得功能扩展、性能提升、稳定性提升等特性
@@ -1040,51 +1040,52 @@ FlatNativeAd.showAd(unitId);
 # 广告响应参数说明
 广告日志TAG：adReq
 ### 返回参数列表
-|参数名|类型|说明|
-|:-----|:-----|
-|imp_id|string|展示id|
-|unitid|string|广告位id|
-|platform|string|dsp名称|
-|campaign_id|string|广告机会id|
-|creative_id|string|素材id|
-|ad_type|string|广告类型： NATIVE BANNER VIDEO|
-|action|string|点击广告动作类型（配合link使用），browser:在浏览器打开, market:在google play打开, apk:在端内打开|
-|title|string|标题|
-|desc|string|描述|
-|app_bundle|string|包名|
-|deep_link|string|深度链接（点击广告后如果已经安装，需要跳转到的app内指定页面，如果未安装需要安装后跳转到deeplink指定的页面）|
-|app_ver|string|被推广的app版本|
-|link|string|广告链接（点击广告跳转的路径，如果是vast 需要终端从协议中解析出<ClickThrough>）|
-|ad_btn|string|按钮文案|
-|refresh_interval|int|刷新时间间隔|
-|req_id|string|请求id|
-|imp_trackers|字符串数组|展示追踪链数组（广告展示时调用）|
-|click_trackers|字符串数组|点击追踪链数组（用户点击广告时调用）|
-|image|object|图片object|
-|icon|object|icon object|
-|video|object|video object|
-|app_icon|string|被推广的app的图标|
-|win_dsp_id|string|胜出的dsp id|
-|app_size|string|被推广的app大小|
-|app_category|string|被推广的app分类|
-|advertiser_name|string|被推广包的广告主名称|
-|html|string|html内容|
-|is_mute|int|是否静音 0否 1是|
-|refresh_time|int|刷新时间间隔的秒数 0 不刷新|
-|is_cta|int|是否需要cta点击 0否 1是|
-|cta_desc|string|cta点击描述|
-|skip_after|int|允许跳过广告的最小秒数|
-|xml|string|vast协议内容|
-|show_type|string|html static video vast playable|
+
+| 参数名 | 类型 | 说明 |
+| ------------ | ------------ |
+| imp_id | string | 展示id |
+| unitid | string | 广告位id |
+| platform | string | dsp名称 |
+| campaign_id | string | 广告机会id |
+| creative_id | string | 素材id |
+| ad_type | string | 广告类型： NATIVE BANNER VIDEO |
+| action | string | 点击广告动作类型（配合link使用），browser:在浏览器打开, market:在google play打开, apk:在端内打开 |
+| title | string | 标题 |
+| desc | string | 描述 |
+| app_bundle | string | 包名 |
+| deep_link|string | 深度链接（点击广告后如果已经安装，需要跳转到的app内指定页面，如果未安装需要安装后跳转到deeplink指定的页面）|
+| app_ver | string | 被推广的app版本 |
+| link|string | 广告链接（点击广告跳转的路径，如果是vast 需要终端从协议中解析出<ClickThrough>）|
+| ad_btn|string|按钮文案|
+| refresh_interval|int|刷新时间间隔|
+| req_id|string|请求id|
+| imp_trackers|字符串数组|展示追踪链数组（广告展示时调用）|
+| click_trackers|字符串数组|点击追踪链数组（用户点击广告时调用）|
+| image|object|图片object|
+| icon|object|icon object|
+| video|object|video object|
+| app_icon|string|被推广的app的图标|
+| win_dsp_id|string|胜出的dsp id|
+| app_size|string|被推广的app大小|
+| app_category|string|被推广的app分类|
+| advertiser_name|string|被推广包的广告主名称|
+| html|string|html内容|
+| is_mute|int|是否静音 0否 1是|
+| refresh_time|int|刷新时间间隔的秒数 0 不刷新|
+| is_cta|int|是否需要cta点击 0否 1是|
+| cta_desc | string | cta点击描述 |
+| skip_after| int |允许跳过广告的最小秒数 |
+| xml | string | vast协议内容 |
+| show_type|string | html static video vast playable |
 
 **Icon & 图片**
 
 
-|参数|类型|说明|
-|:---|:---|
-|url|string|资源链接|
-|h|int|高|
-|w|int|宽|
+| 参数 | 类型 | 说明 |
+| ------------ | ------------ |
+| url |string | 资源链接 |
+| h | int | 高 |
+| w | int | 宽 |
 
 **视频**
 
