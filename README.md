@@ -484,21 +484,121 @@ public class MainActivity extends AppCompatActivity {
 3、native布局添加元素时，需要在loadAd方法之前添加，否则无法正常显示。
 4、插屏广告需要注册回调监听且在onAdLoaded中调用showAd方法展示广告，否则将无法正常显示广告
 
-# IOS SDK
+# iOS SDK
 
-### 添加依赖
-添加 Cocoapods 源
+##SDK项目部署
+###自动部署
+自动部署可以省去您工程配置的时间。iOS SDK会通过CocoaPods进行发布，推荐您使用自动部署。
+
+####安装CocoaPods
+CocoaPods是一个Swift和Objective-C项目的依赖管理器。CocoaPods可以帮助你优雅的扩展你的项目。 如果您未安装过 cocoaPods，可以通过以下命令行进行安装。更多详情请访问 [CocoaPods官网](https://cocoapods.org/ "CocoaPods官网")。
+```bash
+$ sudo gem install cocoapods
 ```
-source 'http://git.flatincbr.com:3000/ios/cocoapod-repo.git'
+
+注意：安装过程可能会耗时比较长，也有可能收到网络状况导致失败，请多次尝试直到安装成功。
+
+####配置Podfile文件
+在您的工程文件所在文件夹下有一个名为Podfile的文件。如果您第一次使用CocoaPods，可以在通过以下命令初始化一个Podfile文件：
+```bash
+$ pod init
 ```
+
+打开 Podfile 文件，应该是如下内容（具体内容可能会有一些出入）：
+```ruby
+    platform :ios, '10.0'
+
+    target 'Your Project Target' do
+        #use_frameworks!
+        #Pods for podTest
+end
+```
+修改Podfile文件，将 pod 'FlatAds_sdk' 添加到 Podfile 中，如下所示：
+```ruby
+platform :ios, '10.0'
+    target 'Your Project Target' do
+        #use_frameworks!
+        pod "FlatAds_sdk", "~> 1.0.4"
+end
+```
+####使用CocoaPods进行SDK部署
+通过CocoaPods安装SDK前，确保CocoaPods索引已经更新。可以通过运行以下命令来更新索引：
+```ruby
+$ pod repo update
+```
+运行命令进行安装：
+```ruby
+$ pod install 
+```
+也可以将上述两条命令合成为如下命令:
+```ruby
+$ pod install --repo-update
+```
+命令执行成功后，会生成.xcworkspace文件，可以打开.xcworkspace来启动工程，如下图所示。
+![Alt text](./Flat_xcworkspace)
+
+####升级SDK
+升级SDK时，首先要更新repo库，执行命令：
+```ruby
+$ pod repo update
+```
+之后重新执行如下命令进行安装即可升级至最新版SDK
+```
+$ pod install
+```
+**注意** ：请确保每次引入的都是SDK最新版本，以获得功能扩展、性能提升、稳定性提升等特性
+
+### 手动部署
+本小节会指导您手动将iOS SDK进行集成。在此之前，请先下载下面我们提供的 SDK ：
+
+[FlatAds_sdk_1.1.0](/FlatAds_sdk_1.1.0.zip "FlatAds_sdk_1.1.0")
+
+如果您没有项目，请先创建一个空白项目。再添加依赖库
+
+将解压缩后的 FlatAds_sdk 文件拖到工程文件夹中，然后在按下图所示选中这两项:
+
+![](./Flat_doc11)
+
+需要引入的系统依赖库
+
+| 库名称  |  SDK |
+| ------------ | ------------ |
+| AdSupport.framework  |  4.72及以后版本 |
+| CoreTelephony  |  同上|
+| libc++.tbd  |  同上 |
+| Security  |  同上 |
+| CoreMedia  |  同上 |
+| WebKit |  同上 |
+| SystemConfiguration  |  同上 |
+| CoreTelephony  |  同上 |
+| MobileCoreServices  |  同上 |
+| AppTrackingTransparency  |  同上 |
+| AVFoundation |  同上 |
+
+其他设置
+在 Target->Build Settings -> Other Linker Flags 中添加 -ObjC (字母 o 和 c 大写)和 $(inherited) 。
+
+![Flat_doc12](./Flat_doc12)
+
+在 Target->Build Phasses ->Link Binary With Libraries 中把 GoogleInteractiveMediaAds.framework 的 Status 改为 Optional 。
+
+![Flat_doc13](./Flat_doc13)
+
+苹果公司在iOS9中升级了应用网络通信安全策略，默认推荐开发者使用HTTPS协议来进行网络通信，并限制HTTP协议的请求。为了避免出现无法拉取到广告的情况，我们推荐开发者在info.plist文件中增加如下配置来实现广告的网络访问：（信任HTTP请求）
+
+![Flat_doc14](./Flat_doc14)
+
 
 ### IOS 14适配
 * SKAdNetwork（SKAN）是 Apple 的归因解决方案，可帮助广告客户在保持用户隐私的同时衡量广告活动。 使用 Apple 的 SKAdNetwork 后，即使 IDFA 不可用，广告网络也可以正确获得应用安装的归因结果。 访问https://developer.apple.com/documentation/storekit/skadnetwork了解更多信息。**为了广告转化的归因，所有开发者须设置SKAdNetwork方案的 FlatAdSDK SKAdNetwork id。**
 * App Tracking Transparency (ATT)适用于请求用户授权，访问与应用相关的数据以跟踪用户或设备。 访问https://developer.apple.com/documentation/apptrackingtransparency了解更多信息。**目前苹果要求在iOS 14.5及以上的版本中必须在弹窗取得用户同意后，才可以追踪用户。对其他版本暂无明确要求，开发者应根据需要配置弹窗。**
 
 **Checklist**
+
 1. 应用编译环境升级至Xcode 12.0 及以上版本
+
 2. 将 FlatAdSDK 的 SKAdNetwork ID 添加到 info.plist 中，以保证SKAdNetwork的正确运行
+
 ```
 <key>SKAdNetworkItems</key>
   <array>
@@ -519,14 +619,17 @@ source 'http://git.flatincbr.com:3000/ios/cocoapod-repo.git'
     </dict>
   </array>
 ```
-3. 支持苹果 ATT：从 iOS 14 开始，若开发者设置 App Tracking Transparency 向用户申请跟踪授权，在用户授权之前IDFA 将不可用。 如果用户拒绝此请求，应用获取到的 IDFA 将自动清零，可能会导致您的广告收入的降低
+
+3.支持苹果 ATT：从 iOS 14 开始，若开发者设置 App Tracking Transparency 向用户申请跟踪授权，在用户授权之前IDFA 将不可用。 如果用户拒绝此请求，应用获取到的 IDFA 将自动清零，可能会导致您的广告收入的降低
 
 * 要获取 App Tracking Transparency 权限，请更新您的 Info.plist，添加 NSUserTrackingUsageDescription 字段和自定义文案描述。代码示例：
+
 ```
 <key>NSUserTrackingUsageDescription</key>
 <string>该标识符将用于向您投放个性化广告</string>
 ```
 * * 向用户申请权限时，请调用以下方法。我们建议您申请权限后再请求广告，以便 FlatAdSDK 准确的获得用户授权状态。
+
 ```
 #import <FlatAds_sdk/FlatAds_sdk.h>
 
@@ -551,30 +654,28 @@ if (@available(iOS 14, *)) {
  
 **日志输出说明**
 ```
-#if DEBUG
+ #if DEBUG
     [FlatAdsSDK setLogLevel:FALogLevelDebug];
 #endif
 ```
- 
 
 ### 广告位类型
-#### Banner 
+#### Banner
 **创建广告位对象、请求广告 FAAdBannerView**
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
 
 ```
     FAAdBannerUnitModel* unitModel = [FAAdBannerUnitModel new];
+    unitModel.unitId = @"your unit id";
     // 目前只提供了两种样式 
-    // FAAdBannerStyleDefault, // 320x50 
-    // FAAdBannerStyleBig, // 320x250
-    unitModel.sizeType = FAAdBannerStyleDefault;
-    unitModel.viewController = self;
-    unitModel.rootView = self.view;
-    unitModel.unitId = @"your unit id";;
-    
+    // FAAdBannerSizeType320x50
+    // FAAdBannerSizeType300x250
+    unitModel.sizeType = FAAdBannerSizeType320x50;
+
+
     FAAdBannerView *bannerView = [[FAAdBannerView alloc] initWithUnitModel:unitModel];
     [self.bannerView addSubview:view];
-    bannerView.frame = CGRectMake(0, 100, self.view.frame.size.width, 50);
+    bannerView.frame = CGRectMake(0, 0, self.view.frame.size.width, 50);
     [bannerView loadAds];
 ```
 使用 FAAdBannerView 创建对象，使用 FAAdBannerView 调用 loadAds 请求广告
@@ -600,44 +701,95 @@ FAAdNativeView 类提供了原生广告的数据绑定、点击事件的上报�
 创建广告位对象、请求广告 FAAdNativeView
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
 ```
-    FAAdUnitModel* unitModel = [FAAdUnitModel new];
+FAAdUnitModel* unitModel = [FAAdUnitModel new];
     unitModel.unitId = @"your unit id";
-    unitModel.viewController = self;
 
     [FAAdNativeView loadWithAdUnitModel:unitModel completionHandler:^(FAAdNativeView * _Nullable nativeView, NSError * _Nullable error) {
         if (!nativeView) {
             return;
         }
-        [self.view addSubview:nativeView];
-        self.nativeView = nativeView;
-        self.nativeView.frame = CGRectMake(0, 0, 320, 280);
-        self.nativeView.delegate = self;
+        FAAdNativeView *nativeAdView =[FAAdNativeView new];
+        nativeAdView.frame = CGRectMake(0, 0, 320, 280);
+        nativeAdView.delegate = self;
+        [self.view addSubview:nativeAdView];
+
         // 为 nativeView 里的 UI 设置 Frame 或 Auto Layout
-    }]; 
+        FAMediaView* mediaView = [FAMediaView new];
+        [nativeAdView addSubview:mediaView];
+           nativeAdView.mediaView = mediaView;
+
+        UIImageView *iconView = [[UIImageView alloc] init];
+        [iconView setImageWithString:self.nativeAd.images.firstObject.url];
+        [nativeAdView addSubview:iconView];
+        nativeAdView.iconView = iconView;
+
+        UILabel *callToActionView = [[UILabel alloc] init];
+        callToActionView.text = self.nativeAd.callToAction;
+        callToActionView.textColor = UIColor.whiteColor;
+        callToActionView.backgroundColor = UIColor.greenColor;
+        callToActionView.textAlignment = NSTextAlignmentCenter;
+        [nativeAdView addSubview:callToActionView];
+        nativeAdView.callToActionView = callToActionView;
+
+        UILabel *headlineView = [[UILabel alloc] init];
+        headlineView.text = self.nativeAd.headline;
+        headlineView.font = [UIFont systemFontOfSize:14.f];
+        [nativeAdView addSubview:headlineView];
+        nativeAdView.headlineView = headlineView;
+
+        UILabel *bodyView = [[UILabel alloc] init];
+        bodyView.text = self.nativeAd.body;
+        bodyView.numberOfLines = 2;
+        bodyView.font = [UIFont systemFontOfSize:12.f];
+        [nativeAdView addSubview:bodyView];
+        nativeAdView.bodyView = bodyView;
+
+        UIView* infoIconView = [UIView new];
+        [nativeAdView addSubview:infoIconView];
+        nativeAdView.infoIconView = infoIconView;
+        nativeAdView.expanPosition = FAInfoIconButtonExpanPositionLeft;
+
+        nativeAdView.nativeAd = self.nativeAd;
+
+        if (nativeAdView.nativeAd.mediaContent.hasVideoContent) {
+            [nativeAdView playVideo];
+        }
+    }];
 ```
 使用 FAAdNativeView 提供的加载方法可以用作预加载
 **广告 UI 素材**
 ```
+/// the native ad object
+@property(nonatomic, strong, nullable) FANativeAd *nativeAd;
+
+///Reference to the object that implements FANativeAdViewDelegate protocol; will receive load events for the given unitId.
+@property (nonatomic, weak, nullable) id<FANativeAdViewDelegate> delegate;
+
 /// media view
-@property (nonatomic, readonly, strong) UIView *mediaView;
+@property (nonatomic, strong) FAMediaView *mediaView;
 
 /// logo image
-@property (nonatomic, readonly, strong) UIImageView *logoImageView;
+@property (nonatomic, strong) UIView *iconView;
 
 /// ad title
-@property (nonatomic, readonly, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIView *headlineView;
 
 /// ad desc
-@property (nonatomic, readonly, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UIView *bodyView;
 
 /// info button
-@property (nonatomic, readonly, strong) FAInfoIconButton *infoIconButton;
+@property (nonatomic, strong) UIView *infoIconView;
 
 /// call to action button
-@property (nonatomic, readonly, strong) UIButton *ctaButton;
+@property (nonatomic, strong) UIView *callToActionView;
 
-/// close button
-@property (nonatomic, readonly, strong) UIButton *closeButton;
+/// the info Icon expan position
+@property (nonatomic, assign) FAInfoIconButtonExpanPosition expanPosition;
+
+
+/// Play the video, if nativeAd.hasVideoContent = YES
+
+- (void)playVideo;
 ```
 
 设置 infoIconButton 位置，往反方向展开
@@ -669,14 +821,14 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 ```
     FAAdUnitModel* unitModel = [FAAdUnitModel new];
     unitModel.unitId = @"your unit id";
-    
+
     [FAInterstitialAd loadWithAdUnitModel:unitModel
                         completionHandler:^(FAInterstitialAd * _Nullable interstitialAd, NSError * _Nullable error) {
         if (error) {
         } else {
             self.interstitialView = interstitialAd;
             self.interstitialView.delegate = self;
-            
+
             [self.interstitialView presentAdFromRootViewController:self];
         }
     }];
@@ -699,11 +851,63 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 - (void)interstitialAdDidClosed:(nonnull FAInterstitialAd *)interstitialAd;
 ```
 
+#### FARewardedAd
+**创建广告位对象、请求广告 FARewardedAd**
+请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
+```
+    FAAdRewardUnitModel* unitModel = [FAAdRewardUnitModel new];
+    unitModel.unitId = @"your unit id";
+    unitModel.customerId = @"34579827459205"; // 受激励的客户id
+    unitModel.uniqueId = @"789764790456"; // 激励的唯一id
+    unitModel.type = @"金币"; // 激励的类型，开发者自定义
+    unitModel.amount = @30; //     激励的值，开发者自定义
+    unitModel.verifier = @"https://www.baidu.com"; // 接入方生产的验证码，用于回调链的验证
+    unitModel.extinfo = @"test extinfo"; // 接入方自定义
+
+    [FARewardedAd loadWithAdUnitModel:unitModel
+                        completionHandler:^(FARewardedAd * _Nullable rewardedAd, NSError * _Nullable error) {
+        if (error) {
+
+        } else {
+            self.rewarded = rewardedAd;
+            self.rewarded.delegate = self;
+
+            [self.rewarded presentAdFromRootViewController:self];
+        }
+    }];
+```
+使用 FARewardedAd 提供的加载方法可以用作预加载
+
+**展示广告**
+调用 presentAdFromRootViewController: 方法展示插屏广告，此处需要传入当前展示的页面。一定要设置rootViewController，即展示广告和跳转落地页需要的 viewController。
+
+**FAAdInterstitialDelegate  回调方法**
+
+```
+/// This method is called when adView ad slot failed to load.
+- (void)rewardedAd:(FARewardedAd *)rewardedAd didFailWithError:(NSError * _Nullable)error;
+
+/// This method is called when ad is clicked.
+- (void)rewardedAdDidClicked:(nonnull FARewardedAd *)rewardedAd;
+
+/// This method is called when ad is Closed.
+- (void)rewardedAdDidClosed:(nonnull FARewardedAd *)rewardedAd;
+
+/// This method is called when the user earns a reward.
+/// @param rewardedAd self
+/// @param rewarded rewarded info
+- (void)rewardedAd:(nonnull FARewardedAd *)rewardedAd didRewardEffective:(FAAdRewardUnitModel *)rewarded;
+
+```
+
 ### 更多说明
 
 ####  注意事项
 1. 必须要设置 rootViewController，用来处理广告跳转。SDK里所有的跳转均采用 present 的方式，请确保传入的 rootViewController 不能为空且没有 present 其他的控制器，否则会出现 presentedViewController 已经存在而导致 present 失败。
 2. 判断广告素材是否准备好直接使用 isAdReady 判断即可
+
+
+------------
 
 
 # COCOS Creator集成 Flat Ads SDK
@@ -866,6 +1070,8 @@ FlatNativeAd.showAd(unitId);
 |show_type|string|html static video vast playable|
 
 **Icon & 图片**
+
+
 |参数|类型|说明|
 |:---|:---|
 |url|string|资源链接|
@@ -873,6 +1079,7 @@ FlatNativeAd.showAd(unitId);
 |w|int|宽|
 
 **视频**
+
 |参数|类型|说明|
 |:---|:---|
 |url|string|资源链接|
@@ -880,7 +1087,7 @@ FlatNativeAd.showAd(unitId);
 |w|int|宽|
 |size|int|视频大小|
 |duration|int|视频时长|
-|ad_btn_jump_type|int|
+|ad_btn_jump_type|int| 跳转类型 |
 
 
 
