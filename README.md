@@ -506,19 +506,20 @@ $ pod init
 
 打开 Podfile 文件，应该是如下内容（具体内容可能会有一些出入）：
 ```ruby
-    platform :ios, '10.0'
+platform :ios, '10.0'
 
-    target 'Your Project Target' do
-        #use_frameworks!
-        #Pods for podTest
+target 'Your Project Target' 
+  #use_frameworks!
+  #Pods for podTest
 end
 ```
 修改Podfile文件，将 pod 'FlatAds_sdk' 添加到 Podfile 中，如下所示：
 ```ruby
 platform :ios, '10.0'
-    target 'Your Project Target' do
-        #use_frameworks!
-        pod "FlatAds_sdk", "~> 1.0.4"
+
+target 'Your Project Target' do
+  #use_frameworks!
+  pod "FlatAds_sdk", "~> 1.0.4"
 end
 ```
 ####使用CocoaPods进行SDK部署
@@ -557,7 +558,7 @@ $ pod install
 
 将解压缩后的 FlatAds_sdk 文件拖到工程文件夹中，然后在按下图所示选中这两项:
 
-![](./Flat_doc11)
+![Flat_doc11](./Flat_doc11.png)
 
 需要引入的系统依赖库
 
@@ -578,15 +579,15 @@ $ pod install
 其他设置
 在 Target->Build Settings -> Other Linker Flags 中添加 -ObjC (字母 o 和 c 大写)和 $(inherited) 。
 
-![Flat_doc12](./Flat_doc12)
+![Flat_doc12](./Flat_doc12.png)
 
 在 Target->Build Phasses ->Link Binary With Libraries 中把 GoogleInteractiveMediaAds.framework 的 Status 改为 Optional 。
 
-![Flat_doc13](./Flat_doc13)
+![Flat_doc13](./Flat_doc13.png)
 
 苹果公司在iOS9中升级了应用网络通信安全策略，默认推荐开发者使用HTTPS协议来进行网络通信，并限制HTTP协议的请求。为了避免出现无法拉取到广告的情况，我们推荐开发者在info.plist文件中增加如下配置来实现广告的网络访问：（信任HTTP请求）
 
-![Flat_doc14](./Flat_doc14)
+![Flat_doc14](./Flat_doc14.png)
 
 
 ### IOS 14适配
@@ -643,7 +644,7 @@ if (@available(iOS 14, *)) {
 
 ### 初始化
 初始化SDK
-```
+```objc
 #import <FlatAds_sdk/FlatAds_sdk.h>
 
 [FlatAdsSDK setAppID:@"your appid" appToken:@"your app token"];
@@ -653,7 +654,7 @@ if (@available(iOS 14, *)) {
  ![Alt text](./1621243376897.png)
  
 **日志输出说明**
-```
+```objc
  #if DEBUG
     [FlatAdsSDK setLogLevel:FALogLevelDebug];
 #endif
@@ -664,24 +665,24 @@ if (@available(iOS 14, *)) {
 **创建广告位对象、请求广告 FAAdBannerView**
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
 
-```
-    FAAdBannerUnitModel* unitModel = [FAAdBannerUnitModel new];
-    unitModel.unitId = @"your unit id";
-    // 目前只提供了两种样式 
-    // FAAdBannerSizeType320x50
-    // FAAdBannerSizeType300x250
-    unitModel.sizeType = FAAdBannerSizeType320x50;
+```objc
+FAAdBannerUnitModel* unitModel = [FAAdBannerUnitModel new];
+unitModel.unitId = @"your unit id";
+// 目前只提供了两种样式 
+// FAAdBannerSizeType320x50
+// FAAdBannerSizeType300x250
+unitModel.sizeType = FAAdBannerSizeType320x50;
 
 
-    FAAdBannerView *bannerView = [[FAAdBannerView alloc] initWithUnitModel:unitModel];
-    [self.bannerView addSubview:view];
-    bannerView.frame = CGRectMake(0, 0, self.view.frame.size.width, 50);
-    [bannerView loadAds];
+FAAdBannerView *bannerView = [[FAAdBannerView alloc] initWithUnitModel:unitModel];
+[self.bannerView addSubview:view];
+bannerView.frame = CGRectMake(0, 0, self.view.frame.size.width, 50);
+[bannerView loadAds];
 ```
 使用 FAAdBannerView 创建对象，使用 FAAdBannerView 调用 loadAds 请求广告
 
 **FABannerAdViewDelegate  回调方法**
-```
+```objc
 /// This method is called when adView ad slot loaded successfully.
 - (void)bannerAdViewLoadSuccess:(nonnull FAAdBannerView *)bannerAdView;
 
@@ -700,65 +701,68 @@ FAAdNativeView 类提供了原生广告的数据绑定、点击事件的上报�
 
 创建广告位对象、请求广告 FAAdNativeView
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
-```
+```objc
 FAAdUnitModel* unitModel = [FAAdUnitModel new];
-    unitModel.unitId = @"your unit id";
+unitModel.unitId = @"your unit id";
 
-    [FAAdNativeView loadWithAdUnitModel:unitModel completionHandler:^(FAAdNativeView * _Nullable nativeView, NSError * _Nullable error) {
-        if (!nativeView) {
-            return;
-        }
-        FAAdNativeView *nativeAdView =[FAAdNativeView new];
-        nativeAdView.frame = CGRectMake(0, 0, 320, 280);
-        nativeAdView.delegate = self;
-        [self.view addSubview:nativeAdView];
+[FAAdNativeView loadWithAdUnitModel:unitModel 
+                  completionHandler:^(FAAdNativeView * _Nullable nativeView, NSError * _Nullable error) {
+    if (!nativeView) {
+        return;
+    }
+    FAAdNativeView *nativeAdView =[FAAdNativeView new];
+    nativeAdView.frame = CGRectMake(0, 0, 320, 280);
+    nativeAdView.delegate = self;
+    [self.view addSubview:nativeAdView];
 
-        // 为 nativeView 里的 UI 设置 Frame 或 Auto Layout
-        FAMediaView* mediaView = [FAMediaView new];
-        [nativeAdView addSubview:mediaView];
-           nativeAdView.mediaView = mediaView;
+    // 为 nativeView 里的 UI 设置 Frame 或 Auto Layout
+    FAMediaView* mediaView = [FAMediaView new];
+    [nativeAdView addSubview:mediaView];
+       nativeAdView.mediaView = mediaView;
 
-        UIImageView *iconView = [[UIImageView alloc] init];
-        [iconView setImageWithString:self.nativeAd.images.firstObject.url];
-        [nativeAdView addSubview:iconView];
-        nativeAdView.iconView = iconView;
+    UIImageView *iconView = [[UIImageView alloc] init];
+    [iconView setImageWithString:self.nativeAd.images.firstObject.url];
+    [nativeAdView addSubview:iconView];
+    nativeAdView.iconView = iconView;
 
-        UILabel *callToActionView = [[UILabel alloc] init];
-        callToActionView.text = self.nativeAd.callToAction;
-        callToActionView.textColor = UIColor.whiteColor;
-        callToActionView.backgroundColor = UIColor.greenColor;
-        callToActionView.textAlignment = NSTextAlignmentCenter;
-        [nativeAdView addSubview:callToActionView];
-        nativeAdView.callToActionView = callToActionView;
+    UILabel *callToActionView = [[UILabel alloc] init];
+    callToActionView.text = self.nativeAd.callToAction;
+    callToActionView.textColor = UIColor.whiteColor;
+    callToActionView.backgroundColor = UIColor.greenColor;
+    callToActionView.textAlignment = NSTextAlignmentCenter;
+    [nativeAdView addSubview:callToActionView];
+    nativeAdView.callToActionView = callToActionView;
 
-        UILabel *headlineView = [[UILabel alloc] init];
-        headlineView.text = self.nativeAd.headline;
-        headlineView.font = [UIFont systemFontOfSize:14.f];
-        [nativeAdView addSubview:headlineView];
-        nativeAdView.headlineView = headlineView;
+    UILabel *headlineView = [[UILabel alloc] init];
+    headlineView.text = self.nativeAd.headline;
+    headlineView.font = [UIFont systemFontOfSize:14.f];
+    [nativeAdView addSubview:headlineView];
+    nativeAdView.headlineView = headlineView;
 
-        UILabel *bodyView = [[UILabel alloc] init];
-        bodyView.text = self.nativeAd.body;
-        bodyView.numberOfLines = 2;
-        bodyView.font = [UIFont systemFontOfSize:12.f];
-        [nativeAdView addSubview:bodyView];
-        nativeAdView.bodyView = bodyView;
+    UILabel *bodyView = [[UILabel alloc] init];
+    bodyView.text = self.nativeAd.body;
+    bodyView.numberOfLines = 2;
+    bodyView.font = [UIFont systemFontOfSize:12.f];
+    [nativeAdView addSubview:bodyView];
+    nativeAdView.bodyView = bodyView;
 
-        UIView* infoIconView = [UIView new];
-        [nativeAdView addSubview:infoIconView];
-        nativeAdView.infoIconView = infoIconView;
-        nativeAdView.expanPosition = FAInfoIconButtonExpanPositionLeft;
+    UIView* infoIconView = [UIView new];
+    [nativeAdView addSubview:infoIconView];
+    nativeAdView.infoIconView = infoIconView;
+    nativeAdView.expanPosition = FAInfoIconButtonExpanPositionLeft;
 
-        nativeAdView.nativeAd = self.nativeAd;
+    nativeAdView.nativeAd = self.nativeAd;
 
-        if (nativeAdView.nativeAd.mediaContent.hasVideoContent) {
-            [nativeAdView playVideo];
-        }
-    }];
+    if (nativeAdView.nativeAd.mediaContent.hasVideoContent) {
+        [nativeAdView playVideo];
+    }
+}];
 ```
+
 使用 FAAdNativeView 提供的加载方法可以用作预加载
 **广告 UI 素材**
-```
+
+```objc
 /// the native ad object
 @property(nonatomic, strong, nullable) FANativeAd *nativeAd;
 
@@ -794,17 +798,20 @@ FAAdUnitModel* unitModel = [FAAdUnitModel new];
 
 设置 infoIconButton 位置，往反方向展开
 
-```
+```objc
 nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 ```
 
 **展示广告**
 设置好布局后调用 renderAdData 方法渲染原生广告数据。
-```
+
+```objc
 [self.nativeView renderAdData];
 ```
+
 **FANativeAdViewDelegate  回调方法**
-```
+
+```objc
 /// This method is called when adView ad slot failed to load.
 - (void)nativeAdView:(nonnull FAAdNativeView *)nativeView didLoadFailWithError:(nonnull NSError *)error;
 
@@ -818,20 +825,20 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 #### Interstitial
 **创建广告位对象、请求广告 FAInterstitialAd**
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
-```
-    FAAdUnitModel* unitModel = [FAAdUnitModel new];
-    unitModel.unitId = @"your unit id";
+```objc
+FAAdUnitModel* unitModel = [FAAdUnitModel new];
+unitModel.unitId = @"your unit id";
 
-    [FAInterstitialAd loadWithAdUnitModel:unitModel
-                        completionHandler:^(FAInterstitialAd * _Nullable interstitialAd, NSError * _Nullable error) {
-        if (error) {
-        } else {
-            self.interstitialView = interstitialAd;
-            self.interstitialView.delegate = self;
+[FAInterstitialAd loadWithAdUnitModel:unitModel
+                    completionHandler:^(FAInterstitialAd * _Nullable interstitialAd, NSError * _Nullable error) {
+    if (error) {
+    } else {
+        self.interstitialView = interstitialAd;
+        self.interstitialView.delegate = self;
 
-            [self.interstitialView presentAdFromRootViewController:self];
-        }
-    }];
+        [self.interstitialView presentAdFromRootViewController:self];
+    }
+}];
 ```
 使用 FAInterstitialAd 提供的加载方法可以用作预加载
 
@@ -840,7 +847,7 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 
 **FAAdInterstitialDelegate  回调方法**
 
-```
+```objc
 /// This method is called when adView ad slot failed to load.
 - (void)interstitialAd:(FAInterstitialAd *)interstitialAd didFailWithError:(NSError * __nullable)error;
 
@@ -854,28 +861,29 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 #### FARewardedAd
 **创建广告位对象、请求广告 FARewardedAd**
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
+```objc
+FAAdRewardUnitModel* unitModel = [FAAdRewardUnitModel new];
+unitModel.unitId = @"your unit id";
+unitModel.customerId = @"34579827459205"; // 受激励的客户id
+unitModel.uniqueId = @"789764790456"; // 激励的唯一id
+unitModel.type = @"金币"; // 激励的类型，开发者自定义
+unitModel.amount = @30; //     激励的值，开发者自定义
+unitModel.verifier = @"https://www.baidu.com"; // 接入方生产的验证码，用于回调链的验证
+unitModel.extinfo = @"test extinfo"; // 接入方自定义
+
+[FARewardedAd loadWithAdUnitModel:unitModel
+                    completionHandler:^(FARewardedAd * _Nullable rewardedAd, NSError * _Nullable error) {
+    if (error) {
+
+    } else {
+        self.rewarded = rewardedAd;
+        self.rewarded.delegate = self;
+
+        [self.rewarded presentAdFromRootViewController:self];
+    }
+}];
 ```
-    FAAdRewardUnitModel* unitModel = [FAAdRewardUnitModel new];
-    unitModel.unitId = @"your unit id";
-    unitModel.customerId = @"34579827459205"; // 受激励的客户id
-    unitModel.uniqueId = @"789764790456"; // 激励的唯一id
-    unitModel.type = @"金币"; // 激励的类型，开发者自定义
-    unitModel.amount = @30; //     激励的值，开发者自定义
-    unitModel.verifier = @"https://www.baidu.com"; // 接入方生产的验证码，用于回调链的验证
-    unitModel.extinfo = @"test extinfo"; // 接入方自定义
 
-    [FARewardedAd loadWithAdUnitModel:unitModel
-                        completionHandler:^(FARewardedAd * _Nullable rewardedAd, NSError * _Nullable error) {
-        if (error) {
-
-        } else {
-            self.rewarded = rewardedAd;
-            self.rewarded.delegate = self;
-
-            [self.rewarded presentAdFromRootViewController:self];
-        }
-    }];
-```
 使用 FARewardedAd 提供的加载方法可以用作预加载
 
 **展示广告**
@@ -883,7 +891,7 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 
 **FAAdInterstitialDelegate  回调方法**
 
-```
+```objc
 /// This method is called when adView ad slot failed to load.
 - (void)rewardedAd:(FARewardedAd *)rewardedAd didFailWithError:(NSError * _Nullable)error;
 
