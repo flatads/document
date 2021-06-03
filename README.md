@@ -61,7 +61,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.0.6'
+    implementation 'com.flatads.sdk:flatads:1.1.2'
 }
 ```
 
@@ -221,46 +221,46 @@ public class MainActivity extends AppCompatActivity {
         nativeAdView = findViewById(R.id.container);
         String adUnitId = "xxxxxxxxx";
         
-        NativeAdLoadBuilder adLoader = new NativeAdLoadBuilder.Builder(adUnitId, this)
-                .setAdListener(new AdLoadListener() {
-                    @Override
-                    public void onAdSucLoad(AdContent adContent) {
-                        FrameLayout frameLayout = findViewById(R.id.my_content);
-                        adView = (NativeAdView) getLayoutInflater().inflate(R.layout.native_view,null);
-                        adView.setTitle(adView.findViewById(R.id.flat_ad_tv_title));//设置广告标题
-                        adView.setDescribe(adView.findViewById(R.id.flat_ad_tv_desc));//设置广告描述
-                        adView.setButton(adView.findViewById(R.id.flat_ad_button));//设置广告按钮
-                        adView.setIcon(adView.findViewById(R.id.flat_ad_iv_icon));//设置广告icon
-                        adView.setContainer(adView.findViewById(R.id.flat_ad_container));//native广告布局
-                        adView.setMedia(adView.findViewById(R.id.flat_ad_media));//设置广告媒体View
-                        adView.setAdShowListener(new AdShowListener() {
-                            @Override
-                            public void onAdShowed() {
+       NativeAd nativeAd = new NativeAd(adUnitId, this);
+               AdLoadListener adLoadListener = new AdLoadListener() {
+                           @Override
+                           public void onAdSucLoad(AdContent adContent) {
+                               FrameLayout frameLayout = findViewById(R.id.my_content);
+                               adView = (NativeAdLayout) getLayoutInflater().inflate(R.layout.native_big_static, null);
+                               adView.setTitle(adView.findViewById(R.id.flat_ad_tv_title));
+                               adView.setDescribe(adView.findViewById(R.id.flat_ad_tv_desc));
+                               adView.setButton(adView.findViewById(R.id.flat_ad_button));
+                               adView.setContainer(adView.findViewById(R.id.flat_ad_container));
+                               adView.setMedia(adView.findViewById(R.id.flat_ad_media_big));
+                               adView.setIcon(adView.findViewById(R.id.flat_ad_iv_icon));
+                               adView.setAdShowListener(new AdShowListener() {
+                                   @Override
+                                   public void onAdShowed() {
 
-                            }
+                                   }
 
-                            @Override
-                            public boolean onAdClicked() {
-                                return false;
-                            }
+                                   @Override
+                                   public boolean onAdClicked() {
+                                       return false;
+                                   }
 
-                            @Override
-                            public void onAdClosed() {
+                                   @Override
+                                   public void onAdClosed() {
 
-                            }
-                        });
-                        frameLayout.removeAllViews();
-                        frameLayout.addView(adView);
-                        adView.showAd(adContent);
-                    }
+                                   }
+                               });
+                               adView.showAd(adContent);
+                               frameLayout.removeAllViews();
+                               frameLayout.addView(adView);
+                           }
 
-                    @Override
-                    public void onAdFailLoad() {
+                           @Override
+                           public void onAdFailLoad() {
 
-                    }
-                }).build();
-
-        adLoader.loadAd();
+                           }
+                       };
+               nativeAd.setAdListener(adLoadListener);
+               nativeAd.loadAd();
     }
     
     @Override
@@ -340,18 +340,6 @@ public class MainActivity extends AppCompatActivity {
 > 注意： 处理完布局后需要调用showAd方法展示广告，否则无反应；成功加载广告后才能添加展示监听。
 
 #### Interstitial
-
-* 向布局中添加InterstitialAdView
-```
-# main_activity.xml
-    ···
-    <com.flatads.sdk.ui.InterstitialAdView
-        android:id="@+id/flat_ad_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    ···
-```
-布局中需给广告广告设置 match_parent。
 
 ```
 public class MainActivity extends AppCompatActivity {
@@ -474,6 +462,133 @@ public class MainActivity extends AppCompatActivity {
                 //关闭广告
             }
         });
+```
+
+#### 激励视频
+```
+public class RewardedActivity extends AppCompatActivity {
+
+    RewardedAd rewardedAd;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.rewarded_test);
+        Map<String, String> map = new HashMap<>();
+        map.put(RequestKeyConst.KEY_CUSTOMER_ID, "1234567");
+        map.put(RequestKeyConst.KEY_UNIQUE_ID, "uihj89uijkbn7uy8");
+        map.put(RequestKeyConst.KEY_REWARD_TYPE, "add_coins");
+        map.put(RequestKeyConst.KEY_REWARD_VALUE, "2");
+        map.put(RequestKeyConst.KEY_VERIFIER, "tyuidjkol");
+        map.put(RequestKeyConst.KEY_EXTINFO, "{'self define':'xxx'}");
+        rewardedAd = new RewardedAd(this);
+        rewardedAd.setAdUnitId("d95c3300-bd00-11eb-8f70-6d1821a44678");
+        rewardedAd.setRequestParams(map);
+        AdLoadListener adLoadCallBack = new AdLoadListener() {
+            @Override
+            public void onAdSucLoad(AdContent adContent) {
+                rewardedAd.showAd(RewardedActivity.this);
+            }
+
+            @Override
+            public void onAdFailLoad() {
+
+            }
+        };
+        rewardedAd.setAdListener(adLoadCallBack);
+        rewardedAd.loadAd();
+        RewardedAdCallback adCallback = new RewardedAdCallback() {
+            @Override
+            public void onRewardedAdOpened() {
+
+            }
+
+            @Override
+            public void onRewardedAdClosed() {
+
+            }
+
+            @Override
+            public void onUserEarnedReward() {
+
+            }
+
+            @Override
+            public void onRewardedAdFailedToShow() {
+
+            }
+
+            @Override
+            public boolean onAdClicked() {
+                return false;
+            }
+        };
+        rewardedAd.setRewardedAdCallback(adCallback);
+
+
+    }
+
+}
+```
+
+需要在加载成功后，调用showAd展示广告，确保广告是已经加载完成了。
+加载激励广告前。需要传入激励广告的相关信息（以上是测试数据）
+
+|字段名称|老版兼容|类型|取值（举例）|说明|字段名称|
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+|customer_id|string|1234567|受激励的客户id|可选|
+|unique_id|string|uihj89uijkbn7uy8|激励的唯一id|可选|
+|reward_type|激励类型|add_coins|激励的类型，开发者自定义|可选|
+|reward_value|激励值|2|激励的值，开发者自定义|可选|
+|verifier|验证码|tyuidjkol|接入方生产的验证码，用于回调链的验证|可选|
+|extinfo|额外信息|{"self define":"xxx"}|接入方自定义| |
+
+* 广告事件
+1. 加载监听
+```
+	   AdLoadListener adLoadCallBack = new AdLoadListener() {
+            @Override
+            public void onAdSucLoad(AdContent adContent) {
+                rewardedAd.showAd(RewardedActivity.this);
+            }
+
+            @Override
+            public void onAdFailLoad() {
+
+            }
+        };
+```
+
+2. 展示监听
+
+```
+		RewardedAdCallback adCallback = new RewardedAdCallback() {
+            @Override
+            public void onRewardedAdOpened() {
+                //激励视频播放
+            }
+
+            @Override
+            public void onRewardedAdClosed() {
+                //关闭激励视频
+            }
+
+            @Override
+            public void onUserEarnedReward() {
+                //获取奖励
+            }
+
+            @Override
+            public void onRewardedAdFailedToShow() {
+                //视频播放失败
+            }
+
+            @Override
+            public boolean onAdClicked() {
+                return false;
+                //点击拦截  false：不拦截后续事件；true：拦截
+            }
+        };
 ```
 
 ### 更多说明
