@@ -534,14 +534,14 @@ public class RewardedActivity extends AppCompatActivity {
 需要在加载成功后，调用showAd展示广告，确保广告是已经加载完成了。
 加载激励广告前。需要传入激励广告的相关信息（以上是测试数据）
 
-|字段名称|老版兼容|类型|取值（举例）|说明|字段名称|
-| ------------ | ------------ | ------------ | ------------ | ------------ |
-|customer_id|string|1234567|受激励的客户id|可选|
-|unique_id|string|uihj89uijkbn7uy8|激励的唯一id|可选|
-|reward_type|激励类型|add_coins|激励的类型，开发者自定义|可选|
-|reward_value|激励值|2|激励的值，开发者自定义|可选|
-|verifier|验证码|tyuidjkol|接入方生产的验证码，用于回调链的验证|可选|
-|extinfo|额外信息|{"self define":"xxx"}|接入方自定义| |
+|  字段名称   | 类型  |  取值（举例）  |  说明  |字段名称|
+|  ----  | ----  | |||
+| customer_id  | string |1234567|受激励的客户id|可选|
+| unique_id  | string |uihj89uijkbn7uy8|激励的唯一id|可选|
+|  reward_type   | 激励类型|add_coins|激励的类型，开发者自定义|可选|
+|  reward_value  | 激励值  |2|激励的值，开发者自定义|可选|
+| verifier  | 验证码 |tyuidjkol|接入方生产的验证码，用于回调链的验证|可选|
+| extinfo  | 额外信息 |{"self define":"xxx"}|接入方自定义||
 
 * 广告事件
 1. 加载监听
