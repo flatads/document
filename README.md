@@ -667,7 +667,7 @@ $ pod install
 ### 手动部署
 本小节会指导您手动将iOS SDK进行集成。在此之前，请先下载下面我们提供的 SDK ：
 
-[FlatAds_sdk_1.1.0](/FlatAds_sdk_1.1.0.zip "FlatAds_sdk_1.1.0")
+[FlatAds_sdk_1.0.7](/resourecs/FlatAds_sdk_1.0.7.zip "FlatAds_sdk_1.0.7")
 
 如果您没有项目，请先创建一个空白项目。再添加依赖库
 
