@@ -61,7 +61,15 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.1.2'
+    implementation 'com.flatads.sdk:flatads:1.1.6'
+}
+
+//
+
+allprojects {
+    repositories {
+        maven {url "http://maven.flat-ads.com/repository/maven-public/"}
+    }
 }
 ```
 
