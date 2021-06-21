@@ -61,7 +61,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.1.7'
+    implementation 'com.flatads.sdk:flatads:1.1.8'
 }
 
 //
