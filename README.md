@@ -483,12 +483,12 @@ public class RewardedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rewarded_test);
         Map<String, String> map = new HashMap<>();
-        map.put(RequestKeyConst.KEY_CUSTOMER_ID, "1234567");
-        map.put(RequestKeyConst.KEY_UNIQUE_ID, "uihj89uijkbn7uy8");
-        map.put(RequestKeyConst.KEY_REWARD_TYPE, "add_coins");
-        map.put(RequestKeyConst.KEY_REWARD_VALUE, "2");
-        map.put(RequestKeyConst.KEY_VERIFIER, "tyuidjkol");
-        map.put(RequestKeyConst.KEY_EXTINFO, "{'self define':'xxx'}");
+        map.put("customer_id", "1234567");
+        map.put("unique_id", "uihj89uijkbn7uy8");
+        map.put("reward_type", "add_coins");
+        map.put("reward_value", "2");
+        map.put("verifier", "tyuidjkol");
+        map.put("extinfo", "{'self define':'xxx'}");
         rewardedAd = new RewardedAd(this);
         rewardedAd.setAdUnitId("d95c3300-bd00-11eb-8f70-6d1821a44678");
         rewardedAd.setRequestParams(map);
@@ -598,6 +598,76 @@ public class RewardedActivity extends AppCompatActivity {
             }
         };
 ```
+
+### 竞价
+SDK支持竞价功能
+```
+//banner
+bannerAdView.bidding(adUnitId, new AdBiddingListener() {
+   @Override
+   public void getBidding(float price, String token) {
+
+   }
+});
+
+//native
+NativeAd nativeAd = new NativeAd(adUnitId, this);
+nativeAd.bidding(new AdBiddingListener() {
+   @Override
+   public void getBidding(float price, String token) {
+
+   }
+});
+
+//interstitial
+interstitialAd = new InterstitialAd(this);
+interstitialAd.bidding(adUnitId,new AdBiddingListener() {
+   @Override
+   public void getBidding(float price, String token) {
+
+   }
+})；
+
+//rewarded
+RewardedAd rewardedAd = new RewardedAd(this);
+rewardedAd.setRequestParams(map);  //map为激励广告参数
+rewardedAd.bidding(adUnitId,new AdBiddingListener() {
+   @Override
+   public void getBidding(float price, String token) {
+
+   }
+});
+```
+竞价后会返回广告价格price，开发者可根据价格决定是否需要广告，如需要广告需要调用winBidding，并且把竞价成功的广告token作为参数传递。
+
+```
+//banner
+bannerAdView.winBidding(token);
+
+//native
+nativeAd.winBidding(token);
+
+//interstitial
+interstitialAd.winBidding(token);
+
+//rewarded
+rewardedAd.winBidding(token);
+```
+竞价成功后，展示广告时需要调用loadAd(token)。注意：不需要再调用show方法展示。
+```
+//banner
+bannerAdView.loadAd(token);
+
+//native
+nativeAd.loadAd(token);
+
+//interstitial
+interstitialAd.loadAd(token);
+
+//rewarded
+rewardedAd.loadAd(token);
+```
+
 
 ### 更多说明
 
@@ -1166,40 +1236,14 @@ FlatNativeAd.showAd(unitId);
 
 | 参数名 | 类型 | 说明 |
 | ------------ | ------------ |
-| imp_id | string | 展示id |
 | unitid | string | 广告位id |
-| platform | string | dsp名称 |
-| campaign_id | string | 广告机会id |
-| creative_id | string | 素材id |
-| ad_type | string | 广告类型： NATIVE BANNER VIDEO |
-| action | string | 点击广告动作类型（配合link使用），browser:在浏览器打开, market:在google play打开, apk:在端内打开 |
 | title | string | 标题 |
 | desc | string | 描述 |
-| app_bundle | string | 包名 |
-| deep_link|string | 深度链接（点击广告后如果已经安装，需要跳转到的app内指定页面，如果未安装需要安装后跳转到deeplink指定的页面）|
-| app_ver | string | 被推广的app版本 |
-| link|string | 广告链接（点击广告跳转的路径，如果是vast 需要终端从协议中解析出<ClickThrough>）|
 | ad_btn|string|按钮文案|
-| refresh_interval|int|刷新时间间隔|
-| req_id|string|请求id|
-| imp_trackers|字符串数组|展示追踪链数组（广告展示时调用）|
-| click_trackers|字符串数组|点击追踪链数组（用户点击广告时调用）|
 | image|object|图片object|
 | icon|object|icon object|
 | video|object|video object|
 | app_icon|string|被推广的app的图标|
-| win_dsp_id|string|胜出的dsp id|
-| app_size|string|被推广的app大小|
-| app_category|string|被推广的app分类|
-| advertiser_name|string|被推广包的广告主名称|
-| html|string|html内容|
-| is_mute|int|是否静音 0否 1是|
-| refresh_time|int|刷新时间间隔的秒数 0 不刷新|
-| is_cta|int|是否需要cta点击 0否 1是|
-| cta_desc | string | cta点击描述 |
-| skip_after| int |允许跳过广告的最小秒数 |
-| xml | string | vast协议内容 |
-| show_type|string | html static video vast playable |
 
 **Icon & 图片**
 
