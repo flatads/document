@@ -713,7 +713,7 @@ platform :ios, '10.0'
 
 target 'Your Project Target' do
   #use_frameworks!
-  pod "FlatAds_sdk", "~> 1.0.4"
+  pod "FlatAds_sdk", "~> 1。1.0"
 end
 ```
 ####使用CocoaPods进行SDK部署
