@@ -537,7 +537,7 @@ public class RewardedActivity extends AppCompatActivity {
 
 2. 展示监听
 
-```
+```jade
 		RewardedAdCallback adCallback = new RewardedAdCallback() {
             @Override
             public void onRewardedAdOpened() {
@@ -661,6 +661,7 @@ $ sudo gem install cocoapods
 
 ####配置Podfile文件
 在您的工程文件所在文件夹下有一个名为Podfile的文件。如果您第一次使用CocoaPods，可以在通过以下命令初始化一个Podfile文件：
+
 ```bash
 $ pod init
 ```
@@ -680,7 +681,7 @@ platform :ios, '10.0'
 
 target 'Your Project Target' do
   #use_frameworks!
-  pod "FlatAds_sdk", "~> 1.0.4"
+  pod "FlatAds_sdk", "~> 1。1.0"
 end
 ```
 ####使用CocoaPods进行SDK部署
@@ -713,7 +714,10 @@ $ pod install
 ### 手动部署
 本小节会指导您手动将iOS SDK进行集成。在此之前，请先下载下面我们提供的 SDK ：
 
-[FlatAds_sdk_1.0.7](/resourecs/FlatAds_sdk_1.0.7.zip "FlatAds_sdk_1.0.7")
+| Version |                          Resources                           |
+| :-----: | :----------------------------------------------------------: |
+|  1.0.7  | [FlatAds_sdk_1.0.7](/resourecs/FlatAds_sdk_1.0.7.zip "FlatAds_sdk_1.0.7") |
+|  1.1.0  | [FlatAds_sdk_1.1.0](/resourecs/FlatAds_sdk_1.1.0.zip "FlatAds_sdk_1.1.0") |
 
 如果您没有项目，请先创建一个空白项目。再添加依赖库
 
@@ -813,7 +817,7 @@ if (@available(iOS 14, *)) {
 
 初始化SDK时，需要传入APP的appid和token，这两个值可以在你的账户后台Placement管理页面中找到
  ![Alt text](./ios_image/1621243376897.png)
- 
+
 **日志输出说明**
 ```objc
  #if DEBUG
@@ -849,6 +853,9 @@ bannerView.frame = CGRectMake(0, 0, self.view.frame.size.width, 50);
 
 /// This method is called when adView ad slot failed to load.
 - (void)bannerAdView:(nonnull FAAdBannerView *)bannerAdView didLoadFailWithError:(nonnull NSError *)error;
+
+/// Tells the delegate that an impression has been recorded for an ad.
+- (void)bannerAdViewDidRecordImpression:(nonnull FAAdBannerView *)bannerView;
 
 /// This method is called when ad is clicked.
 - (void)bannerAdViewDidClick:(nonnull FAAdBannerView *)bannerAdView;
@@ -920,7 +927,6 @@ unitModel.unitId = @"your unit id";
 }];
 ```
 
-使用 FAAdNativeView 提供的加载方法可以用作预加载
 **广告 UI 素材**
 
 ```objc
@@ -951,23 +957,23 @@ unitModel.unitId = @"your unit id";
 /// the info Icon expan position
 @property (nonatomic, assign) FAInfoIconButtonExpanPosition expanPosition;
 
+/// Whether the InfoView needs to be expanded. Default is YES
+@property (nonatomic, assign) BOOL isExpandInfoView;
 
 /// Play the video, if nativeAd.hasVideoContent = YES
-
 - (void)playVideo;
 ```
 
 设置 infoIconButton 位置，往反方向展开
 
-```objc
+```objective-c
 nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 ```
 
-**展示广告**
-设置好布局后调用 renderAdData 方法渲染原生广告数据。
+设置是否需要展开 info 角标
 
-```objc
-[self.nativeView renderAdData];
+```objective-c
+nativeView.isExpandInfoView = YES;
 ```
 
 **FANativeAdViewDelegate  回调方法**
@@ -975,6 +981,9 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 ```objc
 /// This method is called when adView ad slot failed to load.
 - (void)nativeAdView:(nonnull FAAdNativeView *)nativeView didLoadFailWithError:(nonnull NSError *)error;
+
+/// Tells the delegate that an impression has been recorded for an ad.
+- (void)nativeAdViewDidRecordImpression:(nonnull FAAdNativeView *)nativeView;
 
 /// This method is called when ad is clicked.
 - (void)nativeAdViewDidClick:(nonnull FAAdNativeView *)nativeView;
@@ -986,6 +995,7 @@ nativeView.infoIconButton.position = FAInfoIconButtonPositionRight;
 #### Interstitial
 **创建广告位对象、请求广告 FAInterstitialAd**
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
+
 ```objc
 FAAdUnitModel* unitModel = [FAAdUnitModel new];
 unitModel.unitId = @"your unit id";
@@ -1001,8 +1011,6 @@ unitModel.unitId = @"your unit id";
     }
 }];
 ```
-使用 FAInterstitialAd 提供的加载方法可以用作预加载
-
 **展示广告**
 调用 presentAdFromRootViewController: 方法展示插屏广告，此处需要传入当前展示的页面。一定要设置rootViewController，即展示广告和跳转落地页需要的 viewController。
 
@@ -1011,6 +1019,9 @@ unitModel.unitId = @"your unit id";
 ```objc
 /// This method is called when adView ad slot failed to load.
 - (void)interstitialAd:(FAInterstitialAd *)interstitialAd didFailWithError:(NSError * __nullable)error;
+
+/// Tells the delegate that an impression has been recorded for an ad.
+- (void)interstitialAdDidRecordImpression:(nonnull FAInterstitialAd *)interstitialAd;
 
 /// This method is called when ad is clicked.
 - (void)interstitialAdDidClicked:(nonnull FAInterstitialAd *)interstitialAd;
@@ -1022,14 +1033,16 @@ unitModel.unitId = @"your unit id";
 #### FARewardedAd
 **创建广告位对象、请求广告 FARewardedAd**
 请求广告时需要传入广告位对象，广告位对象创建时必须传入广告位ID
+
 ```objc
 FAAdRewardUnitModel* unitModel = [FAAdRewardUnitModel new];
 unitModel.unitId = @"your unit id";
+// 可选参数
 unitModel.customerId = @"34579827459205"; // 受激励的客户id
 unitModel.uniqueId = @"789764790456"; // 激励的唯一id
 unitModel.type = @"金币"; // 激励的类型，开发者自定义
 unitModel.amount = @30; //     激励的值，开发者自定义
-unitModel.verifier = @"https://www.baidu.com"; // 接入方生产的验证码，用于回调链的验证
+unitModel.verifier = @"https://www.xxxxxx.com"; // 接入方生产的验证码，用于回调链的验证
 unitModel.extinfo = @"test extinfo"; // 接入方自定义
 
 [FARewardedAd loadWithAdUnitModel:unitModel
@@ -1045,8 +1058,6 @@ unitModel.extinfo = @"test extinfo"; // 接入方自定义
 }];
 ```
 
-使用 FARewardedAd 提供的加载方法可以用作预加载
-
 **展示广告**
 调用 presentAdFromRootViewController: 方法展示插屏广告，此处需要传入当前展示的页面。一定要设置rootViewController，即展示广告和跳转落地页需要的 viewController。
 
@@ -1055,6 +1066,9 @@ unitModel.extinfo = @"test extinfo"; // 接入方自定义
 ```objc
 /// This method is called when adView ad slot failed to load.
 - (void)rewardedAd:(FARewardedAd *)rewardedAd didFailWithError:(NSError * _Nullable)error;
+
+/// Tells the delegate that an impression has been recorded for an ad.
+- (void)rewardedAdDidRecordImpression:(nonnull FARewardedAd *)rewardedAd;
 
 /// This method is called when ad is clicked.
 - (void)rewardedAdDidClicked:(nonnull FARewardedAd *)rewardedAd;
@@ -1067,6 +1081,76 @@ unitModel.extinfo = @"test extinfo"; // 接入方自定义
 /// @param rewarded rewarded info
 - (void)rewardedAd:(nonnull FARewardedAd *)rewardedAd didRewardEffective:(FAAdRewardUnitModel *)rewarded;
 
+```
+
+### In-App-Biddding 应用头部竞价
+
+FlatAd SDK 支持在移动应用中竞价。我们提供了四种不同的广告格式，包括 Banner，原生，插屏，激励视频。以下为竞价步骤：
+
+- 创建 **FABiddingRequest** 对象并竞价请求 
+
+在 SDK 初始化完成之后，在您的 iOS 项目中，创建如下代码：
+
+```objc
+    FABiddingRequestParameter *param = [[FABiddingRequestParameter alloc] initWithUnitId:@"your unit id"];
+    
+    [FABiddingRequest getBidWithRequestParameter:param
+                               completionHandler:^(FABiddingResponse * _Nonnull bidResponse) {
+        if (bidResponse.success) {
+            // bid  successful
+        } else {
+        	// bid failed
+        }
+    }];
+```
+
+- 处理竞价结果
+
+在这部分中，我们采用 FlatAd SDK 的出价响应与其他买家的 CPM 价格进行比较，并决定 FlatAd SDK 是赢得并加载广告，还是失败。 当您确定拍卖结果时，请调用方法 **notifyWin** 或 **notifyLoss** 以通知 FlatAd SDK 结果。
+	请注意，拍卖逻辑由应用程序本身实现。 它应该简单地比较投标价格并选择最高出价者作为拍卖获胜者。
+以下是如何使用返回的 **FABiddingResponse** 并运行竞价的示例。
+
+```objc
+    FABiddingRequestParameter *param = [[FABiddingRequestParameter alloc] initWithUnitId:@"your unit id"];
+    
+    [SVProgressHUD show];
+    
+    [FABiddingRequest getBidWithRequestParameter:param
+                               completionHandler:^(FABiddingResponse * _Nonnull bidResponse) {
+        self.bidResponse = bidResponse;
+        if (bidResponse.success) {
+			self.bidToken = bidResponse.bidToken;
+            NSLog(@"%@", "bid success"];
+            [bidResponse notifyWin];
+        } else {
+			NSLog(@"%@", "bid failed"];
+        }
+    }];
+```
+
+- 根据竞价结果，加载对应的广告
+
+当 FlatAd SDK 出价赢得竞价后，下一步是使用 **bidToken** 方法来请求广告。
+
+此部分与普通请求广告步骤一样，只有一处不同，您需要在初始化广告的时候把 bidToken 带上，此时则不需要传入 unit id。其中对于bidToken，您可以通过这样来获取：bidResponse.bidToken。
+
+Delegate的回调方法与普通请求广告是一样的。
+
+在这里，我们以 Banner 广告为例：
+
+```objc
+    FAAdBannerUnitModel* unitModel = [FAAdBannerUnitModel new];
+    unitModel.sizeType = FAAdBannerSizeType320x50;
+    unitModel.token = self.bidToken; 
+
+    self.bannerView = [[FAAdBannerView alloc] initWithUnitModel:unitModel];
+    self.bannerView.delegate = self;
+    [self.bannerView loadAds];
+    self.bannerView.frame = CGRectMake(0,
+                                       self.view.frame.size.height - 50,
+                                       self.view.frame.size.width,
+                                       50);
+		[self.view addSubview:self.bannerView];
 ```
 
 ### 更多说明
