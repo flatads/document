@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 ```
 public class MainActivity extends AppCompatActivity {
 
-    private InterstitialAdView interstitialAdView;
+    private InterstitialAd adLoader;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -363,77 +363,45 @@ public class MainActivity extends AppCompatActivity {
 
         FlatAdSDK.initialize(getApplication(), appId, token);
 
-        interstitialAdView = findViewById(R.id.container);
-        InterstitialAdLoadBuilder adLoader = new InterstitialAdLoadBuilder.Builder(adUnitId, this)
-                .setAdListener(new AdLoadListener() {
-                    @Override
-                    public void onAdSucLoad(AdContent adContent) {
-                        interstitialAdView = findViewById(R.id.flat_ad_container);
-                        interstitialAdView.setAdShowListener(new AdShowListener() {
-                                @Override
-                                public void onAdShowed() {
-                                   
-                                }
+        adLoader = new InterstitialAd(this);
 
-                                @Override
-                                public boolean onAdClicked() {
-                                    return false;
-                                }
+        adLoader.setUnitId(adUnitId);
+        adLoader.setAdShowListener(new AdShowListener() {
+            @Override
+            public void onAdShowed() {
+                Log.d("INTERSTITIAL","onAdShowed");
+            }
 
-                                @Override
-                                public void onAdClosed() {
+            @Override
+            public boolean onAdClicked() {
+                return false;
+            }
 
-                                }
-                            });
-                        interstitialAdView.showAd(adContent);
-                    }
+            @Override
+            public void onAdClosed() {
 
-                    @Override
-                    public void onAdFailLoad() {
+            }
+        });
+        adLoader.setAdListener(new AdLoadListener() {
+            @Override
+            public void onAdSucLoad(AdContent adContent) {
+                if (adLoader.isLoaded()){
+                    adLoader.showAd(InterstitialLanActivity.this);
+                }
+            }
 
-                    }
-                }).build();
+            @Override
+            public void onAdFailLoad() {
 
+            }
+        });
         adLoader.loadAd();
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (interstitialAdView != null) {
-            interstitialAdView.pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (interstitialAdView != null) {
-            interstitialAdView.resume();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (interstitialAdView != null) {
-            interstitialAdView.stop();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (interstitialAdView != null) {
-            interstitialAdView.destroy();
-        }
     }
 
 }
 ```
 
-> 注意：插屏广告需要注册回调监听且在onAdSucLoad中调用showAd方法展示广告，否则将无法正常显示广告。
-
-由于插屏广告存在video和vast类型的广告，需要在Activity生命周期中对应添加广告的生命周期回调，否则播放器可能会异常。
+> 注意：插屏广告需要注册回调监听且在onAdSucLoad中调用showAd方法展示广告，或者自定义触发showAd；当请求成功后，isLoaded()为true
 
 * 广告事件
 1. 加载监听
