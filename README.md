@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     ···
 ```
 app:banner_size：将此属性设置为要使用的广告尺寸。提供了2种类型的banner尺寸：small_size (320x50) 和 big_size (300x250)。不设置默认为big_size (300x250)。
-布局中需给广告位设置 match_parent。
+布局中需给广告位设置 match_parent。提供了setBannerSize方法，该方法对布局进行操作，所以必须在主线程中执行。
 
 MainActivity中，需要设置广告的unitid，并且调用loadAd()，展示广告。
 ```
