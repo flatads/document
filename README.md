@@ -299,14 +299,14 @@ public class MainActivity extends AppCompatActivity {
                AdLoadListener adLoadListener = new AdLoadListener() {
                            @Override
                            public void onAdSucLoad(AdContent adContent) {
-                               FrameLayout frameLayout = findViewById(R.id.my_content);
-                               adView = (NativeAdLayout) getLayoutInflater().inflate(R.layout.native_big_static, null);
-                               adView.setTitle(adView.findViewById(R.id.flat_ad_tv_title));
-                               adView.setDescribe(adView.findViewById(R.id.flat_ad_tv_desc));
-                               adView.setButton(adView.findViewById(R.id.flat_ad_button));
-                               adView.setContainer(adView.findViewById(R.id.flat_ad_container));
-                               adView.setMedia(adView.findViewById(R.id.flat_ad_media_big));
-                               adView.setIcon(adView.findViewById(R.id.flat_ad_iv_icon));
+                           FrameLayout frameLayout = findViewById(R.id.my_content);
+                           adView = (NativeAdLayout) getLayoutInflater().inflate(R.layout.native_big_static,null);
+                           adView.setTitle(adView.findViewById(R.id.flat_ad_tv_title));
+                           adView.setDescribe(adView.findViewById(R.id.flat_ad_tv_desc));
+                           adView.setButton(adView.findViewById(R.id.flat_ad_button));
+                           adView.setContainer(adView.findViewById(R.id.flat_ad_container));
+                           adView.setMedia(adView.findViewById(R.id.flat_ad_media_big));
+                           adView.setIcon(adView.findViewById(R.id.flat_ad_iv_icon));
                                adView.setAdShowListener(new AdShowListener() {
                                    @Override
                                    public void onAdShowed() {
