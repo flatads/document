@@ -710,6 +710,28 @@ rewardedAd.loadAd(token);
 2、混淆时，需添加 -keep class com.flatads.sdk.response.* {*;} ，否则将无数据返回。
 3、native布局添加元素时，需要在loadAd方法之前添加，否则无法正常显示。
 4、插屏广告需要注册回调监听且在onAdLoaded中调用showAd方法展示广告，否则将无法正常显示广告
+5、网络安全配置：res文件夹下创建一个xml文件夹，然后创建一个network_security_config.xml文件
+```
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" overridePins="true" />
+            <certificates src="user" overridePins="true" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
+```
+接着，在AndroidManifest.xml文件下的application标签增加以下属性
+```
+
+<application
+...
+ android:networkSecurityConfig="@xml/network_security_config"
+...
+    />
+```
 
 # iOS SDK
 
