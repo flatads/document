@@ -1383,7 +1383,7 @@ FlatNativeAd.showAd(unitId);
 | image | object | 图片object |
 | icon | object | icon object |
 | video | object | video object |
-| app_icon | string 被推广的app的图标 |
+| app_icon | string | 被推广的app的图标 |
 
 **Icon & 图片**
 
