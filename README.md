@@ -66,16 +66,27 @@
 ![Alt text](./flat_image/1620989538211.png)
 
 > 维度
+> 
 > Date：日期
+> 
 > App/Site：APP或者是Site
+> 
 > Placement：广告位
+> 
 > Country：国家
+> 
 > 指标
+> 
 > Impression：广告展示
+> 
 > Clicks：广告点击
+> 
 > CTR：广告点击率，Clicks/Impression
+> 
 > eCPM：每千次展示单价，Revenue/Impression*1000
+> 
 > Revenue：广告收益
+> 
 
 # Android SDK
 ### 添加依赖和初始化
@@ -599,7 +610,7 @@ public class RewardedActivity extends AppCompatActivity {
 加载激励广告前。需要传入激励广告的相关信息（以上是测试数据）
 
 |  字段名称   | 类型  |  取值（举例）  |  说明  |字段名称|
-|  ----  | ----  | |||
+|  ----  | ----  | ----  | ----  | ----  |
 | customer_id  | string |1234567|受激励的客户id|可选|
 | unique_id  | string |uihj89uijkbn7uy8|激励的唯一id|可选|
 |  reward_type   | 激励类型|add_coins|激励的类型，开发者自定义|可选|
@@ -728,11 +739,12 @@ rewardedAd.loadAd(token);
 ### 更多说明
 
 ####  注意事项
-1、接入时需对app开启存储权限后才可以正常下载广告配置的apk，否则部分手机将无下载反应。
-2、混淆时，需添加 -keep class com.flatads.sdk.response.* {*;} ，否则将无数据返回。
-3、native布局添加元素时，需要在loadAd方法之前添加，否则无法正常显示。
-4、插屏广告需要注册回调监听且在onAdLoaded中调用showAd方法展示广告，否则将无法正常显示广告
-5、网络安全配置：res文件夹下创建一个xml文件夹，然后创建一个network_security_config.xml文件
+
+1. 接入时需对app开启存储权限后才可以正常下载广告配置的apk，否则部分手机将无下载反应。
+2. 混淆时，需添加 -keep class com.flatads.sdk.response.* {*;} ，否则将无数据返回。
+3. native布局添加元素时，需要在loadAd方法之前添加，否则无法正常显示。
+4. 插屏广告需要注册回调监听且在onAdLoaded中调用showAd方法展示广告，否则将无法正常显示广告
+
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config xmlns:tools="http://schemas.android.com/tools"
