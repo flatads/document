@@ -769,11 +769,11 @@ rewardedAd.loadAd(token);
 
 # iOS SDK
 
-##SDK项目部署
-###自动部署
+## SDK项目部署
+### 自动部署
 自动部署可以省去您工程配置的时间。iOS SDK会通过CocoaPods进行发布，推荐您使用自动部署。
 
-####安装CocoaPods
+#### 安装CocoaPods
 CocoaPods是一个Swift和Objective-C项目的依赖管理器。CocoaPods可以帮助你优雅的扩展你的项目。 如果您未安装过 cocoaPods，可以通过以下命令行进行安装。更多详情请访问 [CocoaPods官网](https://cocoapods.org/ "CocoaPods官网")。
 ```bash
 $ sudo gem install cocoapods
@@ -781,7 +781,7 @@ $ sudo gem install cocoapods
 
 注意：安装过程可能会耗时比较长，也有可能收到网络状况导致失败，请多次尝试直到安装成功。
 
-####配置Podfile文件
+#### 配置Podfile文件
 在您的工程文件所在文件夹下有一个名为Podfile的文件。如果您第一次使用CocoaPods，可以在通过以下命令初始化一个Podfile文件：
 
 ```bash
@@ -806,7 +806,7 @@ target 'Your Project Target' do
   pod "FlatAds_sdk", "~> 1。1.0"
 end
 ```
-####使用CocoaPods进行SDK部署
+#### 使用CocoaPods进行SDK部署
 通过CocoaPods安装SDK前，确保CocoaPods索引已经更新。可以通过运行以下命令来更新索引：
 ```bash
 $ pod repo update
@@ -822,7 +822,7 @@ $ pod install --repo-update
 命令执行成功后，会生成.xcworkspace文件，可以打开.xcworkspace来启动工程，如下图所示。
 ![Alt text](./ios_image/Flat_xcworkspace)
 
-####升级SDK
+#### 升级SDK
 升级SDK时，首先要更新repo库，执行命令：
 ```bash
 $ pod repo update
