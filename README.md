@@ -1398,7 +1398,7 @@ FlatNativeAd.showAd(unitId);
 **视频**
 
 |参数|类型|说明|
-|:---|:---|
+|:---|:---|:---|
 |url|string|资源链接|
 |h|int|高|
 |w|int|宽|
@@ -1410,7 +1410,7 @@ FlatNativeAd.showAd(unitId);
 
 ### 异常状态码
 |状态码（status）| 说明 |描述（msg)|
-|:-----|:-----|
+|:-----|:-----|:-----|
 |40003|签名验证失败 |not validate|
 |40101|广告位不存在|Not bidding:tagid not actived|
 |40102|adx 流控|request next time please|
