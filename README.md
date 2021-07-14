@@ -820,7 +820,7 @@ $ pod install
 $ pod install --repo-update
 ```
 命令执行成功后，会生成.xcworkspace文件，可以打开.xcworkspace来启动工程，如下图所示。
-![Alt text](./ios_image/Flat_xcworkspace)
+![Alt text](./ios_image/Flat_xcworkspace.png)
 
 #### 升级SDK
 升级SDK时，首先要更新repo库，执行命令：
