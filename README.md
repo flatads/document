@@ -9,31 +9,53 @@
 
 ![Alt text](./flat_image/1620964293507.png)
 
+
 > Type: 流量类型是APP流量还是Web Site流量；
+> 
 > Platform：APP的系统平台，是Android还是IOS，如果是Windows之类的请选择其他；
+> 
 > Bundle：APP的包名；（如果您的Android APP已上架，填写包名后点击Look up，将自动填充Store URL和APP Category）
+> 
 > Store URL：APP上架商店的详情页链接；
+> 
 > Domain：Site的域名；
+> 
 > App Categroy：APP的分类；
+> 
 > Is app published：您的APP是否已上架；
+
 > Status：APP/Site的状态，如果状态为关，其Appid和token将不再生效；
+> 
 > COPPA：如果您的APP/Site遵守COPPA，请勾选上；
+> 
 > TOKEN和Appid：为对接SDK时的验证密钥，新建APP后，自动生成。
+> 
 
 3. 完成APP/Site的填写后，保存继续为其创建广告位，填写的字段释义如下
 ![Alt text](./flat_image/1620964462690.png)
 
 > App/Site：当前创建广告位的归属，一个App/Site可以拥有多个广告位；
+> 
 > Name：广告位的名称，一般可以命名为"APPNAME_TYPE_SIZE"；
+> 
 > Bid Floor：广告位的底价，只有高于这个底价的广告才会填充；
+> 
 > Placement Type：广告位类型，Banner, Native, Interstitial, Rewarded Ad；
+> 
 > Size：广告位尺寸；
+> 
 > Allowed Ad Type：支持填充的广告类型；Display(HTML), Static, VAST Video, Playable；
+> 
 > Refresh Time：Banner广告自动刷新时间；
+> 
 > Muting：视频广告是否默认静音；
+> 
 > Allow Skip：允许跳过的时间，单位为秒；
+> 
 > CTA Popup：是否在视频播放过程中弹出CTA按钮，一般能够提升CTR，但是可能遮罩视频元素；
+> 
 > Status：广告位状态，状态为关时，广告位将不再请求广告；
+> 
 
 ### 集成Flat Ads SDK
 保存广告位后，就可以进入集成SDK的环节。Flat Ads SDK支持Android，IOS，Unity, Cocos。同时如果您对接了Mopub聚合SDK，我们也只支持Mopub JS Tag作为自定义网盟接入。如果你是Site流量，也可以直接部署我们的JS Tag
