@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.1.12'
+    implementation 'com.flatads.sdk:flatads:1.1.13'
 }
 
 //
