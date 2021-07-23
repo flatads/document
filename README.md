@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.1.8'
+    implementation 'com.flatads.sdk:flatads:1.1.12'
 }
 
 //
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdFailLoad() {
+            public void onAdFailLoad(ErrorCode errorCode) {
                 //广告加载失败
             }
         });
@@ -362,36 +362,12 @@ public class MainActivity extends AppCompatActivity {
                            }
 
                            @Override
-                           public void onAdFailLoad() {
+                           public void onAdFailLoad(ErrorCode errorCode) {
 
                            }
                        };
                nativeAd.setAdListener(adLoadListener);
                nativeAd.loadAd();
-    }
-    
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (adView!=null){
-            adView.pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (adView!=null){
-            adView.resume();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (adView!=null){
-            adView.stop();
-        }
     }
 
     @Override
@@ -417,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onAdFailLoad() {
+                    public void onAdFailLoad(ErrorCode errorCode) {
                         //广告加载失败
                     }
                 })
@@ -490,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdFailLoad() {
+            public void onAdFailLoad(ErrorCode errorCode) {
 
             }
         });
@@ -512,7 +488,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onAdFailLoad() {
+                    public void onAdFailLoad(ErrorCode errorCode) {
                         //广告加载失败
                     }
                 })
@@ -566,7 +542,7 @@ public class RewardedActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdFailLoad() {
+            public void onAdFailLoad(ErrorCode errorCode) {
 
             }
         };
@@ -628,7 +604,7 @@ public class RewardedActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdFailLoad() {
+            public void onAdFailLoad(ErrorCode errorCode) {
 
             }
         };
@@ -1450,6 +1426,18 @@ FlatNativeAd.showAd(unitId);
 |40102|adx 流控|request next time please|
 |40103|没有匹配的广告返回|no ads from all dsps|
 |40201 | 参数错误|empty appid or sign|
+
+### 客户端错误码
+|状态码（status）| 说明 |描述（msg)|
+|:-----|:-----|:-----|
+|-1|未知错误 |unknown mistake|
+|600000|返回空广告信息数据|Return empty ad information data|
+|600001|广告 unitId 为空|Ad unitId is empty|
+|600002|无法打开链接|Unable to open link|
+|600003 | 加载物料失败|Failed to load material|
+|600004|广告未备好|Ads not ready|
+|600005|全屏广告已经展示在屏幕|Full-screen ads are already displayed on the screen|
+|600006|传入的unitID广告类型不符|The incoming unitID ad type does not match|
 
 
 
