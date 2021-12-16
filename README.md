@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.1.13'
+    implementation 'com.flatads.sdk:flatads:1.4.0'
 }
 
 //
@@ -163,41 +163,60 @@ public class MainActivity extends AppCompatActivity {
         bannerAdView.loadAd();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (bannerAdView != null) {
+            bannerAdView.resume();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bannerAdView != null) {
+            bannerAdView.stop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bannerAdView != null) {
+            bannerAdView.destroy();
+        }
+    }
+
 }
 ```
 * 需要监听广告相关回调事件，在相关的AdView添加Listener。
-1. 加载监听
 ```
-        bannerAdView.setAdLoadListener(new AdLoadListener() {
-            @Override
-            public void onAdSucLoad(AdContent adContent) {
-                //广告加载成功
-            }
+               bannerAdView.setAdListener(new BannerAdListener() {
+                   @Override
+                   public void onAdExposure() {
+                    //展示广告
+                   }
 
-            @Override
-            public void onAdFailLoad(ErrorCode errorCode) {
-                //广告加载失败
-            }
-        });
-```
-2. 展示监听
-```
-        bannerAdView.setAdShowListener(new AdShowListener() {
-            @Override
-            public void onAdShowed() {
-                //展示广告
-            }
+                   @Override
+                   public void onAdClick() {
 
-            @Override
-            public boolean onAdClicked() {
-                return false;  //点击拦截  false：不拦截后续事件；true：拦截
-            }
+                   }
 
-            @Override
-            public void onAdClosed() {
-                //关闭广告
-            }
-        });
+                   @Override
+                   public void onAdClose() {
+                    //关闭广告
+                   }
+
+                   @Override
+                   public void onAdLoadSuc() {
+                    //广告加载成功
+                   }
+
+                   @Override
+                   public void onAdLoadFail(ErrorCode errorCode) {
+                    //广告加载失败
+                   }
+               });
 ```
 
 #### Native
@@ -219,7 +238,7 @@ native显示样式由用户自定义，但需要调用NativeAdLayout使用做处
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 ```
-# native_view.xml
+# native_layout.xml
 <?xml version="1.0" encoding="utf-8"?>
 <com.flatads.sdk.ui.NativeAdLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -314,7 +333,7 @@ MediaView需要设置宽高比例。
 ```
 public class MainActivity extends AppCompatActivity {
 
-    private NativeAdLayout adView;
+    private NativeAd nativeAd;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -328,47 +347,63 @@ public class MainActivity extends AppCompatActivity {
         nativeAdView = findViewById(R.id.container);
         String adUnitId = "xxxxxxxxx";
         
-       NativeAd nativeAd = new NativeAd(adUnitId, this);
-               AdLoadListener adLoadListener = new AdLoadListener() {
-                           @Override
-                           public void onAdSucLoad(AdContent adContent) {
-                           FrameLayout frameLayout = findViewById(R.id.my_content);
-                           adView = (NativeAdLayout) getLayoutInflater().inflate(R.layout.native_big_static,null);
-                           adView.setTitle(adView.findViewById(R.id.flat_ad_tv_title));
-                           adView.setDescribe(adView.findViewById(R.id.flat_ad_tv_desc));
-                           adView.setButton(adView.findViewById(R.id.flat_ad_button));
-                           adView.setContainer(adView.findViewById(R.id.flat_ad_container));
-                           adView.setMedia(adView.findViewById(R.id.flat_ad_media_big));
-                           adView.setIcon(adView.findViewById(R.id.flat_ad_iv_icon));
-                               adView.setAdShowListener(new AdShowListener() {
-                                   @Override
-                                   public void onAdShowed() {
+        nativeAd = new NativeAd(this,adUnitId );
 
-                                   }
+        nativeAd.setAdListener(new NativeAdListener() {
+                @Override
+                public void onAdLoadSuc(Ad ad) {
+                      inflateAd(ad);
+                      frameLayout = findViewById(R.id.native_ad);
+                      frameLayout.removeAllViews();
+                      frameLayout.addView(adView);
+                }
 
-                                   @Override
-                                   public boolean onAdClicked() {
-                                       return false;
-                                   }
+                @Override
+                public void onAdLoadFail(ErrorCode errorCode) {
 
-                                   @Override
-                                   public void onAdClosed() {
+                }
 
-                                   }
-                               });
-                               adView.showAd(adContent);
-                               frameLayout.removeAllViews();
-                               frameLayout.addView(adView);
-                           }
+                @Override
+                public void onAdExposure() {
 
-                           @Override
-                           public void onAdFailLoad(ErrorCode errorCode) {
+                }
 
-                           }
-                       };
-               nativeAd.setAdListener(adLoadListener);
-               nativeAd.loadAd();
+                @Override
+                public void onAdClick() {
+
+                }
+
+                @Override
+                public void onAdDestroy() {
+
+                }
+            });
+           nativeAd.loadAd();
     }
+
+    private void inflateAd(Ad ad) {
+        adView = (NativeAdLayout) getLayoutInflater().inflate(R.layout.native_layout, null);
+
+        TextView tvTitle = adView.findViewById(R.id.flat_ad_tv_title);
+        TextView tvDesc = adView.findViewById(R.id.flat_ad_tv_desc);
+        TextView tvAdBtn = adView.findViewById(R.id.flat_ad_button);
+        View view = adView.findViewById(R.id.flat_ad_container);
+        ImageView icon = adView.findViewById(R.id.flat_ad_iv_icon);
+        MediaView mediaView = adView.findViewById(R.id.flat_ad_media_big);
+
+        tvTitle.setText(ad.getTitle());
+        tvDesc.setText(ad.getDesc());
+        tvAdBtn.setText(ad.getAdBtn());
+
+        // Create a list of clickable views
+        List<View> clickableViews = new ArrayList<>();
+        clickableViews.add(tvAdBtn);
+        clickableViews.add(view);
+
+        nativeAd.registerViewForInteraction(adView, mediaView, icon, clickableViews);
+
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -379,55 +414,48 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
-布局元素获取必须在成功的时候绑定，处理完布局后需要调用showAd方法展示广告，否则无反应。
+布局元素获取必须在成功的时候绑定，需要在加载成功后对布局进行操作，最后调用nativeAd.registerViewForInteraction将adView, mediaView, icon, clickableViews传给nativeAd处理
 
 由于native广告存在video类型的广告，需要在Activity生命周期中对应添加广告的生命周期回调，否则播放器可能会异常。
 
 * 广告事件
-1. 加载监听
 ```
-        setAdListener(new AdLoadListener() {
-                    @Override
-                    public void onAdSucLoad(AdContent adContent) {
-                       //广告加载成功
-                    }
+        nativeAd.setAdListener(new NativeAdListener() {
+                @Override
+                public void onAdLoadSuc(Ad ad) {
+                      //广告加载成功
+                }
 
-                    @Override
-                    public void onAdFailLoad(ErrorCode errorCode) {
+                @Override
+                public void onAdLoadFail(ErrorCode errorCode) {
                         //广告加载失败
-                    }
-                })
+                }
+
+                @Override
+                public void onAdExposure() {
+                        //广告展示
+                }
+
+                @Override
+                public void onAdClick() {
+                    //广告点击
+                }
+
+                @Override
+                public void onAdDestroy() {
+                     //广告销毁
+                }
+            });
 ```
 
-2. 展示监听
-
-```
-                    adView.setAdShowListener(new AdShowListener() {
-                            @Override
-                            public void onAdShowed() {
-                                //展示广告
-                            }
-
-                            @Override
-                            public boolean onAdClicked() {
-                                return false; //点击拦截  false：不拦截后续事件；true：拦截
-                            }
-
-                            @Override
-                            public void onAdClosed() {
-                                //关闭广告
-                            }
-                        });
-```
-
-> 注意： 处理完布局后需要调用showAd方法展示广告，否则无反应；成功加载广告后才能添加展示监听。
+> 注意： 需要在activity destroy时销毁adview
 
 #### Interstitial
 
 ```
 public class MainActivity extends AppCompatActivity {
 
-    private InterstitialAd adLoader;
+    private InterstitialAd interstitialAd;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -438,82 +466,44 @@ public class MainActivity extends AppCompatActivity {
 
         FlatAdSDK.initialize(getApplication(), appId, token);
 
-        adLoader = new InterstitialAd(this);
-
-        adLoader.setUnitId(adUnitId);
-        adLoader.setAdShowListener(new AdShowListener() {
-            @Override
-            public void onAdShowed() {
-                Log.d("INTERSTITIAL","onAdShowed");
-            }
-
-            @Override
-            public boolean onAdClicked() {
-                return false;
-            }
-
-            @Override
-            public void onAdClosed() {
-
-            }
-        });
-        adLoader.setAdListener(new AdLoadListener() {
-            @Override
-            public void onAdSucLoad(AdContent adContent) {
-                if (adLoader.isLoaded()){
-                    adLoader.showAd(InterstitialLanActivity.this);
+        String adUnitId = "xxxxxxxxx";
+        interstitialAd = new InterstitialAd(this, adUnitId);
+        interstitialAd.setAdListener(new InterstitialAdListener() {
+                @Override
+                public void onAdLoadSuc() {
+                      //广告加载成功
+                      interstitialAd.isReady(){
+                         interstitialAd.show();
+                      }
                 }
-            }
 
-            @Override
-            public void onAdFailLoad(ErrorCode errorCode) {
+                @Override
+                public void onAdLoadFail(ErrorCode errorCode) {
+                        //广告加载失败
+                }
 
-            }
-        });
-        adLoader.loadAd();
+                @Override
+                public void onAdExposure() {
+                        //广告展示
+                }
+
+                @Override
+                public void onAdClick() {
+                    //广告点击
+                }
+
+                @Override
+                public void onAdClose() {
+                     //广告关闭
+                }
+            });
+        interstitialAd.loadAd();
     }
 
 }
 ```
 
-> 注意：插屏广告需要注册回调监听且在onAdSucLoad中调用showAd方法展示广告，或者自定义触发showAd；当请求成功后，isLoaded()为true
-
-* 广告事件
-1. 加载监听
-```
-        setAdListener(new AdLoadListener() {
-                    @Override
-                    public void onAdSucLoad(AdContent adContent) {
-                       //广告加载成功
-                    }
-
-                    @Override
-                    public void onAdFailLoad(ErrorCode errorCode) {
-                        //广告加载失败
-                    }
-                })
-```
-
-2. 展示监听
-
-```
-        interstitialAdView.setAdShowListener(new AdShowListener() {
-            @Override
-            public void onAdShowed() {
-                //展示广告
-            }
-
-            @Override
-            public boolean onAdClicked() {
-                return false;  //点击拦截  false：不拦截后续事件；true：拦截
-            }
-
-            @Override
-            public void onAdClosed() {
-                //关闭广告
-            }
-        });
-```
+> 注意：当请求成功后，isReady()为true，可根据
 
 #### 激励视频
 ```
@@ -532,57 +522,55 @@ public class RewardedActivity extends AppCompatActivity {
         map.put("reward_value", "2");
         map.put("verifier", "tyuidjkol");
         map.put("extinfo", "{'self define':'xxx'}");
-        rewardedAd = new RewardedAd(this);
-        rewardedAd.setAdUnitId("d95c3300-bd00-11eb-8f70-6d1821a44678");
+        String adUnitId = "xxxxxxxxxxxxxxxx"
+        rewardedAd = new RewardedAd(this,adUnitId);
         rewardedAd.setRequestParams(map);
-        AdLoadListener adLoadCallBack = new AdLoadListener() {
-            @Override
-            public void onAdSucLoad(AdContent adContent) {
-                rewardedAd.showAd(RewardedActivity.this);
-            }
+        rewardedAd.setAdListener(new RewardedAdListener() {
+               @Override
+               public void onAdClose() {
 
-            @Override
-            public void onAdFailLoad(ErrorCode errorCode) {
+               }
 
-            }
-        };
-        rewardedAd.setAdListener(adLoadCallBack);
-        rewardedAd.loadAd();
-        RewardedAdCallback adCallback = new RewardedAdCallback() {
-            @Override
-            public void onRewardedAdOpened() {
+               @Override
+               public void onUserEarnedReward() {
+                          //获取奖励
+               }
 
-            }
+               @Override
+               public void onAdFailedToShow() {
+                           //播放失败
+               }
 
-            @Override
-            public void onRewardedAdClosed() {
+               @Override
+               public void onAdExposure() {
+                          //广告展示
+               }
 
-            }
+               @Override
+               public void onAdClick() {
 
-            @Override
-            public void onUserEarnedReward() {
+               }
 
-            }
+               @Override
+               public void onAdLoadSuc() {
+                  rewardedAd.isReady(){
+                      rewardedAd.show();
+                  }
+               }
 
-            @Override
-            public void onRewardedAdFailedToShow() {
+               @Override
+               public void onAdLoadFail(ErrorCode errorCode) {
 
-            }
-
-            @Override
-            public boolean onAdClicked() {
-                return false;
-            }
-        };
-        rewardedAd.setRewardedAdCallback(adCallback);
-
+               }
+               });
+               rewardedAd.loadAd();
 
     }
 
 }
 ```
 
-需要在加载成功后，调用showAd展示广告，确保广告是已经加载完成了。
+> 注意：当请求成功后，isReady()为true，可根据
 加载激励广告前。需要传入激励广告的相关信息（以上是测试数据）
 
 |  字段名称   | 类型  |  取值（举例）  |  说明  |字段名称|
@@ -594,93 +582,80 @@ public class RewardedActivity extends AppCompatActivity {
 | verifier  | 验证码 |tyuidjkol|接入方生产的验证码，用于回调链的验证|可选|
 | extinfo  | 额外信息 |{"self define":"xxx"}|接入方自定义||
 
-* 广告事件
-1. 加载监听
+
+#### 互动广告
 ```
-	   AdLoadListener adLoadCallBack = new AdLoadListener() {
-            @Override
-            public void onAdSucLoad(AdContent adContent) {
-                rewardedAd.showAd(RewardedActivity.this);
-            }
+public class MainActivity extends AppCompatActivity {
 
-            @Override
-            public void onAdFailLoad(ErrorCode errorCode) {
+    private InteractiveView interactiveView;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-            }
-        };
+        String appId = "xxxxxxxx"; //申请时的appid
+        String token = "xxxxxxxxxxxxxxxx"; //申请时的token
+
+        FlatAdSDK.initialize(getApplication(), appId, token);
+
+        String adUnitId = "xxxxxxxxx";
+        interactiveView = findViewById(R.id.interactive_view);
+        interactiveView.setAdUnitId(adUnitId)
+        interactiveView.setAdListener(new InteractiveAdListener() {
+                @Override
+                public void onAdLoadSuc() {
+                      //广告加载成功
+                }
+
+                @Override
+                public void onAdLoadFail(ErrorCode errorCode) {
+                        //广告加载失败
+                }
+
+                @Override
+                public void onAdExposure() {
+                        //广告展示
+                }
+
+                @Override
+                public void onAdClick() {
+                    //广告点击
+                }
+
+                @Override
+                public void onAdClose() {
+                     //广告关闭
+                }
+            });
+        interactiveView.loadAd();
+    }
+
+}
 ```
 
-2. 展示监听
-
-```jade
-		RewardedAdCallback adCallback = new RewardedAdCallback() {
-            @Override
-            public void onRewardedAdOpened() {
-                //激励视频播放
-            }
-
-            @Override
-            public void onRewardedAdClosed() {
-                //关闭激励视频
-            }
-
-            @Override
-            public void onUserEarnedReward() {
-                //获取奖励
-            }
-
-            @Override
-            public void onRewardedAdFailedToShow() {
-                //视频播放失败
-            }
-
-            @Override
-            public boolean onAdClicked() {
-                return false;
-                //点击拦截  false：不拦截后续事件；true：拦截
-            }
-        };
-```
+> 注意：互动广告只需要调用loadAd()
 
 ### 竞价
 SDK支持竞价功能
 ```
 //banner
-bannerAdView.bidding(adUnitId, new AdBiddingListener() {
-   @Override
-   public void getBidding(float price, String token) {
-
-   }
-});
+bannerAdView.bidding((isGetAd, price) -> {});
 
 //native
 NativeAd nativeAd = new NativeAd(adUnitId, this);
-nativeAd.bidding(new AdBiddingListener() {
-   @Override
-   public void getBidding(float price, String token) {
-
-   }
-});
+nativeAd.bidding((isGetAd, price) -> {});
 
 //interstitial
 interstitialAd = new InterstitialAd(this);
-interstitialAd.bidding(adUnitId,new AdBiddingListener() {
-   @Override
-   public void getBidding(float price, String token) {
-
-   }
-})；
+interstitialAd.bidding((isGetAd, price) -> {});
 
 //rewarded
 RewardedAd rewardedAd = new RewardedAd(this);
 rewardedAd.setRequestParams(map);  //map为激励广告参数
-rewardedAd.bidding(adUnitId,new AdBiddingListener() {
-   @Override
-   public void getBidding(float price, String token) {
-
-   }
-});
+rewardedAd.bidding((isGetAd, price) -> {});
 ```
+
+isGetAd 如果返回false，则说明无广告获取
 竞价后会返回广告价格price，开发者可根据价格决定是否需要广告，如需要广告需要调用winBidding，并且把竞价成功的广告token作为参数传递。
 
 ```
@@ -718,8 +693,6 @@ rewardedAd.loadAd(token);
 
 1. 接入时需对app开启存储权限后才可以正常下载广告配置的apk，否则部分手机将无下载反应。
 2. 混淆时，需添加 -keep class com.flatads.sdk.response.* {*;} ，否则将无数据返回。
-3. native布局添加元素时，需要在loadAd方法之前添加，否则无法正常显示。
-4. 插屏广告需要注册回调监听且在onAdLoaded中调用showAd方法展示广告，否则将无法正常显示广告
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
