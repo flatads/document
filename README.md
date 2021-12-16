@@ -503,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-> 注意：当请求成功后，isReady()为true，可根据
+> 注意：当请求成功后，isReady()为true，可根据此值判断广告是否准备好。
 
 #### 激励视频
 ```
@@ -570,7 +570,7 @@ public class RewardedActivity extends AppCompatActivity {
 }
 ```
 
-> 注意：当请求成功后，isReady()为true，可根据
+> 注意：当请求成功后，isReady()为true，可根据此值判断广告是否准备好。
 加载激励广告前。需要传入激励广告的相关信息（以上是测试数据）
 
 |  字段名称   | 类型  |  取值（举例）  |  说明  |字段名称|
