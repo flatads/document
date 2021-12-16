@@ -633,7 +633,10 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-> 注意：互动广告只需要调用loadAd()
+> 注意：
+1.互动广告需要尽早的调用，如可在进入app时进行互动广告加载，在需要展示互动广告时，把view添加到布局上面去。
+2.广告回调onAdExposure时，则webview已经加载完成。
+
 
 ### 竞价
 SDK支持竞价功能
@@ -1404,13 +1407,18 @@ FlatNativeAd.showAd(unitId);
 |状态码（status）| 说明 |描述（msg)|
 |:-----|:-----|:-----|
 |-1|未知错误 |unknown mistake|
-|600000|返回空广告信息数据|Return empty ad information data|
-|600001|广告 unitId 为空|Ad unitId is empty|
-|600002|无法打开链接|Unable to open link|
-|600003 | 加载物料失败|Failed to load material|
-|600004|广告未备好|Ads not ready|
-|600005|全屏广告已经展示在屏幕|Full-screen ads are already displayed on the screen|
-|600006|传入的unitID广告类型不符|The incoming unitID ad type does not match|
+|2001|SKD初始化失败 |The SDK initialization error|
+|2002|SDK没有初始化 |The SDK uninitialized|
+|3001|没有网络 |There is no network|
+|3002|网络异常 |Network anomalies|
+|4001|广告 unitId 为空|Ad unitId is empty|
+|4002|返回空广告信息数据|Return empty ad information data|
+|4003 | 加载物料失败|Failed to load material|
+|5001|数据结构异常|The server-side data error|
+|5002|广告位不存在|Advertising does not exist|
+|5003|adx 流控|Adx curations|
+|5004|没有匹配的广告返回|There is no matching advertising|
+|5005|签名验证失败|Signature verification failed|
 
 
 
