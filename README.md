@@ -416,7 +416,6 @@ public class MainActivity extends AppCompatActivity {
 ```
 布局元素获取必须在成功的时候绑定，需要在加载成功后对布局进行操作，最后调用nativeAd.registerViewForInteraction将adView, mediaView, icon, clickableViews传给nativeAd处理
 
-由于native广告存在video类型的广告，需要在Activity生命周期中对应添加广告的生命周期回调，否则播放器可能会异常。
 
 * 广告事件
 ```
@@ -584,7 +583,7 @@ public class RewardedActivity extends AppCompatActivity {
 
 
 #### 互动广告
-互动广告的大小由开发者自己决定，使用时可先触发loadAd，后续再调用
+互动广告的大小由开发者自己决定，使用时可先触发loadAd，后续再把布局添加到界面上，可以更快的显示广告内容。
 ```
     ...
     <com.flatads.sdk.ui.view.InteractiveView
@@ -669,34 +668,31 @@ rewardedAd.bidding((isGetAd, price) -> {});
 ```
 
 isGetAd 如果返回false，则说明无广告获取
-竞价后会返回广告价格price，开发者可根据价格决定是否需要广告，如需要广告需要调用winBidding，并且把竞价成功的广告token作为参数传递。
+竞价后会返回广告价格price，开发者可根据价格决定是否需要广告，如需要广告需要调用winBidding。
 
 ```
 //banner
-bannerAdView.winBidding(token);
+bannerAdView.winBidding();
 
 //native
-nativeAd.winBidding(token);
+nativeAd.winBidding();
 
 //interstitial
-interstitialAd.winBidding(token);
+interstitialAd.winBidding();
 
 //rewarded
-rewardedAd.winBidding(token);
+rewardedAd.winBidding();
 ```
-竞价成功后，展示广告时需要调用loadAd(token)。注意：不需要再调用show方法展示。
+如果广告需要该广告，后续调用
 ```
-//banner
-bannerAdView.loadAd(token);
+//banner:需要将bannerview 添加到布局上
 
-//native
-nativeAd.loadAd(token);
+//native:将view渲染完add到布局上，和正常的展示一样
 
-//interstitial
-interstitialAd.loadAd(token);
+interstitialAd.show();//interstitial广告
 
-//rewarded
-rewardedAd.loadAd(token);
+rewardedAd.show(); //rewarded广告
+
 ```
 
 
