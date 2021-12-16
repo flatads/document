@@ -584,6 +584,16 @@ public class RewardedActivity extends AppCompatActivity {
 
 
 #### 互动广告
+互动广告的大小由开发者自己决定，使用时可先触发loadAd，后续再调用
+```
+    ...
+    <com.flatads.sdk.ui.view.InteractiveView
+        android:id="@+id/interactive_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        />
+    ...
+```
 ```
 public class MainActivity extends AppCompatActivity {
 
