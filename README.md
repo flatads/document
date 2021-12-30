@@ -118,11 +118,21 @@ public class MainActivity extends AppCompatActivity {
         String appId = "xxxxxxxx"; //申请时的appid
         String token = "xxxxxxxxxxxxxxxx"; //申请时的token
         
-        FlatAdSDK.initialize(getApplication(), appId, token);
+        FlatAdSDK.initialize(getApplication(), appId, token, new InitListener(){
+            @Override
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+            }
+        };
     }
     
 }
 ```
+
+广告必须在初始化完成后调用！
 
 初始化SDK时，需要传入APP的appid和token，这两个值可以在你的账户后台Placement管理页面中找到
  ![Alt text](./flat_image/1621243376897.png)
