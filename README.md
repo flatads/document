@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.4.1'
+    implementation 'com.flatads.sdk:flatads:1.4.3'
 }
 
 //
@@ -619,7 +619,8 @@ public class MainActivity extends AppCompatActivity {
 
         String adUnitId = "xxxxxxxxx";
         interactiveView = findViewById(R.id.interactive_view);
-        interactiveView.setAdUnitId(adUnitId)
+        interactiveView.setAdUnitId(adUnitId);
+        interactiveView.setCacheTime(1000 * 10);
         interactiveView.setAdListener(new InteractiveAdListener() {
                 @Override
                 public void onAdLoadSuc() {
@@ -651,6 +652,8 @@ public class MainActivity extends AppCompatActivity {
 
 }
 ```
+
+setCacheTime为设置缓存时间，默认为24小时
 
 > 注意：
 1.互动广告需要尽早的调用，如可在进入app时进行互动广告加载，在需要展示互动广告时，把view添加到布局上面去。
