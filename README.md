@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.4.3'
+    implementation 'com.flatads.sdk:flatads:1.4.4'
 }
 
 //
@@ -653,7 +653,14 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-setCacheTime为设置缓存时间，默认为24小时
+setCacheTime为设置缓存时间，默认为24小时。
+
+如果开发者想指定互动广告icon图片，提供了方法设置：
+```
+interactiveView.setIconView(Drawable)
+interactiveView.setIconView(Bitmap)
+interactiveView.setIconView(url)
+```
 
 > 注意：
 1.互动广告需要尽早的调用，如可在进入app时进行互动广告加载，在需要展示互动广告时，把view添加到布局上面去。
