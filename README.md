@@ -662,6 +662,11 @@ interactiveView.setIconView(Bitmap)
 interactiveView.setIconView(url)
 ```
 
+注意：Activity销毁时需要调用onDestroy方法
+```
+interactiveView.onDestroy()
+```
+
 > 注意：
 1.互动广告需要尽早的调用，如可在进入app时进行互动广告加载，在需要展示互动广告时，把view添加到布局上面去。
 2.广告回调onAdExposure时，则webview已经加载完成。
