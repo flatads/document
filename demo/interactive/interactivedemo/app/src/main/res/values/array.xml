@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ad_text">
+        <item>banner</item>
+        <item>native</item>
+        <item>interstitial</item>
+        <item>rewarded</item>
+        <item>interactive</item>
+    </string-array>
+
+    <string-array name="banner_id">
+        <item>4c99c7a0-e2fa-11eb-813f-f577e30314d6</item>
+        <item>343cf980-a17c-11eb-ad10-bf9f4da0961d</item>
+        <!--        <item>3</item>-->
+        <!--        <item>4</item>-->
+        <!--        <item>5</item>-->
+    </string-array>
+
+    <string-array name="native_id">
+        <item>dbdf8e60-d3fd-11eb-b2d3-4deb686a8496</item>
+        <item>74544e60-a0e1-11eb-960e-690ffa82dfb0</item>
+        <item>c617fc80-bfa2-11eb-846f-cfbd6c252b35</item>
+        <item>d6dec6b0-9e92-11eb-960e-690ffa82dfb0</item>
+        <item>74544e60-a0e1-11eb-960e-690ffa82dfb0</item>
+        <!--        <item>33</item>-->
+        <!--        <item>44</item>-->
+        <!--        <item>55</item>-->
+    </string-array>
+
+    <string-array name="interstitial_id">
+        <item>fa835630-d3fd-11eb-a9c1-83cdf87e675e</item>
+        <item>ea39aa70-d7f1-11eb-b581-7fbf135223b8</item>
+        <item>c801f480-a0dd-11eb-960e-690ffa82dfb0</item>
+        <item>1bbf14b0-a5a0-11eb-87df-b1f71be69ea3</item>
+        <item>2278f1d0-a8e9-11eb-b3e0-e744062b512d</item>
+        <item>8aaba0b0-67c3-11ec-97a4-190358e69c0c</item>
+        <!--        <item>555</item>-->
+    </string-array>
+
+    <string-array name="rewarded_id">
+        <item>d95c3300-bd00-11eb-8f70-6d1821a44678</item>
+        <item>5d47fad0-b7a4-11eb-80ed-032568831082</item>
+        <item>180a46e0-d3ff-11eb-a9c1-83cdf87e675e</item>
+        <item>81bbd1c0-3aee-11ec-9a67-d5f9931c295e</item>
+        <item>8aaba0b0-67c3-11ec-97a4-190358e69c0c</item>
+        <!--        <item>2222</item>-->
+        <!--        <item>3333</item>-->
+        <!--        <item>4444</item>-->
+        <!--        <item>5555</item>-->
+    </string-array>
+
+
+    <string-array name="interactive_id">
+        <item>ee26ece0-4e63-11ec-8676-ad0af2e7dfc3</item>
+        <item>ca1976b0-5d86-11ec-ac82-2526fceba055</item>
+        <item>80827b00-6f7e-11ec-88c9-c33cd476efea</item>
+        <item>915df8a0-6f7e-11ec-babc-9d83c451c700</item>
+    </string-array>
+</resources>

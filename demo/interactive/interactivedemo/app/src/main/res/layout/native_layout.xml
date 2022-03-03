@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.flatads.sdk.ui.view.NativeAdLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flat_ad_container"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.flatads.sdk.ui.view.MediaView
+            android:id="@+id/flat_ad_media_big"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="w,9:16"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/flat_ad_iv_icon"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flat_ad_media_big" />
+
+        <TextView
+            android:id="@+id/flat_ad_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/flatad_shape_bg"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flat_ad_media_big"
+            tools:text="sdasdasdsa"/>
+
+        <TextView
+            android:id="@+id/flat_ad_tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/flat_ad_button"
+            app:layout_constraintStart_toEndOf="@id/flat_ad_iv_icon"
+            app:layout_constraintTop_toTopOf="@id/flat_ad_iv_icon" />
+
+        <TextView
+            android:id="@+id/flat_ad_tv_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/text_des_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/flat_ad_button"
+            app:layout_constraintStart_toEndOf="@id/flat_ad_iv_icon"
+            app:layout_constraintTop_toBottomOf="@id/flat_ad_tv_title" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.flatads.sdk.ui.view.NativeAdLayout>

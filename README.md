@@ -104,6 +104,9 @@ allprojects {
         maven {url "http://maven.flat-ads.com/repository/maven-public/"}
     }
 }
+
+//混淆规则
+-keep class com.flatads.sdk.response.* {*;}
 ```
 
 初始化SDK
@@ -633,8 +636,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onAdExposure() {
-                        //广告展示
+                public void onRenderSuccess() {
+                    // 渲染成功
+                }
+
+                @Override
+                public void onRenderFail(String s, int i) {
+                       // 渲染失败
                 }
 
                 @Override
@@ -1445,6 +1453,8 @@ FlatNativeAd.showAd(unitId);
 |4001|广告 unitId 为空|Ad unitId is empty|
 |4002|返回空广告信息数据|Return empty ad information data|
 |4003 | 加载物料失败|Failed to load material|
+|4004 | 广告未准备好|Ads not ready|
+|4005 | 解析response错误|Response to parse failure|
 |5001|数据结构异常|The server-side data error|
 |5002|广告位不存在|Advertising does not exist|
 |5003|adx 流控|Adx curations|
