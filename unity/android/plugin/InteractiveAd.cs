@@ -18,4 +18,8 @@ public class InteractiveAd : MonoBehaviour
         interactiveBridge.Call("loadcreateInteractiveAd",actObj,listener);
     }
 
+    public void destroy(){
+        interactiveBridge.Call("destroy");
+    }
+
 }
