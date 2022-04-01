@@ -758,6 +758,94 @@ rewardedAd.show(); //rewarded广告
     />
 ```
 
+
+# Unity for Android
+
+##SDK项目部署
+
+将 untiy/android/plugin 中的C#脚本导入到Unity工程中，并在游戏启动时调用SDK初始化
+```C#
+    ...
+    void start(){
+        FlatInit flatInit = new FlatInit();
+        flatInit.initSDK("appId","appToken");
+    }
+```
+其中 initSDK 第一个参数是appId，第二个参数是appToken。
+
+##互动广告使用
+```C#
+    private InteractiveAd interactiveAd;
+
+    private AndroidJavaClass act;
+    private AndroidJavaObject actObj;
+    ...
+
+    public void createInteractiveAd(){
+        if(interactiveAd == null){
+            interactiveAd = new InteractiveAd();
+            interactiveAd.createInteractiveAd(actObj,"unitId",200,200,0,0,0,0,600,400);
+        }
+    }
+
+    public void loadInteractiveAd(){
+        if(interactiveAd!=null){
+            interactiveAd.loadInteractiveAd(actObj);
+        }
+    }
+```
+其中 InteractiveAd#createInteractiveAd 分别传入的参数是
+1.游戏的Activity
+2.广告的unitId
+3~4.互动广告的宽高
+5~8.左、右、上、下的偏移
+9~10.在游戏页面的位置，传入以下值对应位置
+100 -- left -- 页面左边
+200 -- right -- 页面右边
+300 -- top -- 页面顶部
+400 -- bottom -- 页面底部
+500 -- center -- 页面居中
+600 -- center_horizontal -- 页面水平居中
+700 -- center_vertical -- 页面垂直居中
+
+在创建完互动广告实例后，调用InteractiveAd#loadInteractiveAd开始加载互动广告，需要传入游戏页面的Activity。
+
+C#代码处理完后，需要将Unity工程转为Android工程
+步骤：File -> Build Settings -> Platform选择Android -> 勾选Export Project -> Export 成功导出android工程
+-> 在android工程中，build.gradle中修改
+```
+
+...
+allprojects {
+    ...
+    maven { url "http://maven.flat-ads.com/repository/maven-public/" }
+}
+...
+
+dependencies {
+    implementation 'com.flat.androidplugin:androidplugin:1.0.0'
+}
+```
+
+-> 在src/main/res文件下创建名为xml的文件夹，并新建xml文件network_security_config
+```
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" overridePins="true" />
+            <certificates src="user" overridePins="true" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
+```
+
+-> 创建完xml文件后，找到AndroidManifest，在application标签中添加 android:networkSecurityConfig="@xml/network_security_config"
+
+以上处理完后点击run即可开始打包运行游戏
+
 # iOS SDK
 
 ## SDK项目部署
