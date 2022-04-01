@@ -822,6 +822,8 @@ rewardedAd.show(); //rewarded广告
 
 在创建完互动广告实例后，调用InteractiveAd#loadInteractiveAd开始加载互动广告，需要传入游戏页面的Activity。
 
+在游戏退出时，需要调用InteractiveAd#destroy销毁互动广告对象。
+
 C#代码处理完后，需要将Unity工程转为Android工程
 步骤：File -> Build Settings -> Platform选择Android -> 勾选Export Project -> Export 成功导出android工程
 -> 在android工程中，build.gradle中修改
