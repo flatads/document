@@ -16,7 +16,8 @@ public class FlatDemo : MonoBehaviour
         act = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         actObj = act.GetStatic<AndroidJavaObject>("currentActivity");
         FlatInit flatInit = new FlatInit();
-        flatInit.initSDK("xxxxxx","xxxxxxxx");
+        FlatInitListener initListener = new FlatInitListener();
+        flatInit.initSDK("xxxxxx","xxxxxxxx",initListener);
 
     }
 
@@ -30,7 +31,8 @@ public class FlatDemo : MonoBehaviour
 
     public void loadInteractiveAd(){
         if(interactiveAd!=null){
-            interactiveAd.loadInteractiveAd(actObj);
+            InteractiveListener listener = new InteractiveListener();
+            interactiveAd.loadInteractiveAd(actObj,listener);
         } 
     }
 

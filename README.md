@@ -768,10 +768,11 @@ rewardedAd.show(); //rewarded广告
     ...
     void start(){
         FlatInit flatInit = new FlatInit();
-        flatInit.initSDK("appId","appToken");
+        FlatInitListener initListener = new FlatInitListener();
+        flatInit.initSDK("appId","appToken",initListener);
     }
 ```
-其中 initSDK 第一个参数是appId，第二个参数是appToken。
+其中 initSDK 第一个参数是appId，第二个参数是appToken，第三个参数是初始化成功失败的回调。
 
 ## 互动广告使用
 ```C#
@@ -789,8 +790,9 @@ rewardedAd.show(); //rewarded广告
     }
 
     public void loadInteractiveAd(){
-        if(interactiveAd!=null){
-            interactiveAd.loadInteractiveAd(actObj);
+        if(interactiveAd != null){
+            InteractiveListener listener = new InteractiveListener();
+            interactiveAd.loadInteractiveAd(actObj,listener);
         }
     }
 ```
@@ -820,13 +822,13 @@ rewardedAd.show(); //rewarded广告
 
 700 -- center_vertical -- 页面垂直居中
 
-在创建完互动广告实例后，调用InteractiveAd#loadInteractiveAd开始加载互动广告，需要传入游戏页面的Activity。
+在创建完互动广告实例后，调用InteractiveAd#loadInteractiveAd开始加载互动广告，需要传入游戏页面的Activity和广告的listener。
 
 在游戏退出时，需要调用InteractiveAd#destroy销毁互动广告对象。
 
 C#代码处理完后，需要将Unity工程转为Android工程
 步骤：File -> Build Settings -> Platform选择Android -> 勾选Export Project -> Export 成功导出android工程
--> 在android工程中，build.gradle中修改
+-> 在android工程中，build.gradle中添加
 ```
 
 ...

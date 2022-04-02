@@ -13,8 +13,7 @@ public class InteractiveAd : MonoBehaviour
         leftMargin,rightMargin,topMargin,bottomMargin,gravity1,gravity2);
     }
 
-    public void loadInteractiveAd(AndroidJavaObject actObj){
-        InteractiveListener listener = new InteractiveListener();
+    public void loadInteractiveAd(AndroidJavaObject actObj,InteractiveListener listener){
         interactiveBridge.Call("loadcreateInteractiveAd",actObj,listener);
     }
 
