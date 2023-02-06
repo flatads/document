@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.4.5'
+    implementation 'com.flatads.sdk:flatads:1.4.10-gp-20230206.101701-56'
 }
 
 //
@@ -204,32 +204,51 @@ public class MainActivity extends AppCompatActivity {
 ```
 * 需要监听广告相关回调事件，在相关的AdView添加Listener。
 ```
-               bannerAdView.setAdListener(new BannerAdListener() {
-                   @Override
-                   public void onAdExposure() {
-                    //展示广告
-                   }
+    bannerAdView.setAdListener(new BannerAdListener() {
+        @Override
+        public void onAdExposure() {
+            // 广告曝光
+            Toast.makeText(getContext(), "show success", Toast.LENGTH_SHORT).show();
+        }
 
-                   @Override
-                   public void onAdClick() {
+        @Override
+        public void onRenderFail(int code, String msg) {
+            // 广告渲染失败
+            Toast.makeText(getContext(), "onRenderFail：" + code + msg, Toast.LENGTH_SHORT).show();
 
-                   }
+        }
 
-                   @Override
-                   public void onAdClose() {
-                    //关闭广告
-                   }
 
-                   @Override
-                   public void onAdLoadSuc() {
-                    //广告加载成功
-                   }
+        @Override
+        public void onAdClick() {
+            // 点击广告
+            Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+        }
 
-                   @Override
-                   public void onAdLoadFail(ErrorCode errorCode) {
-                    //广告加载失败
-                   }
-               });
+        @Override
+        public void onAdClose() {
+            // 广告关闭
+            Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onAdLoadSuc() {
+            // 广告请求成功
+            Toast.makeText(getContext(), "load success", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onAdLoadFail(int code, String msg) {
+            // 广告请求失败
+            Toast.makeText(getContext(), "load fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onRefresh() {
+            //  自动刷新回调
+            Toast.makeText(getContext(), "onRefresh", Toast.LENGTH_SHORT).show();
+        }
+    });
 ```
 
 #### Native
@@ -363,35 +382,39 @@ public class MainActivity extends AppCompatActivity {
         nativeAd = new NativeAd(this,adUnitId );
 
         nativeAd.setAdListener(new NativeAdListener() {
-                @Override
-                public void onAdLoadSuc(Ad ad) {
-                      inflateAd(ad);
-                      frameLayout = findViewById(R.id.native_ad);
-                      frameLayout.removeAllViews();
-                      frameLayout.addView(adView);
-                }
+            @Override
+            public void onAdLoadSuc(Ad ad) {
+                Toast.makeText(getContext(), "load success", Toast.LENGTH_SHORT).show();
+                inflateAd(ad);
+            }
 
-                @Override
-                public void onAdLoadFail(ErrorCode errorCode) {
+            @Override
+            public void onAdLoadFail(int errorCode, String msg) {
+                Toast.makeText(getContext(), "load fail", Toast.LENGTH_SHORT).show();
+            }
 
-                }
+            @Override
+            public void onAdExposure() {
+                Toast.makeText(getContext(), "onAdExposure", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdExposure() {
+            @Override
+            public void onAdClick() {
+                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            }
 
-                }
+            @Override
+            public void onAdDestroy() {
+               Toast.makeText(getContext(), "destroy", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdClick() {
+            @Override
+            public void onRenderFail(int code, String msg) {
+                Toast.makeText(getContext(), "onRenderFail", Toast.LENGTH_SHORT).show();
 
-                }
-
-                @Override
-                public void onAdDestroy() {
-
-                }
-            });
-           nativeAd.loadAd();
+            }
+        });
+        nativeAd.loadAd();
     }
 
     private void inflateAd(Ad ad) {
@@ -416,6 +439,22 @@ public class MainActivity extends AppCompatActivity {
         nativeAd.registerViewForInteraction(adView, mediaView, icon, clickableViews);
 
     }
+    
+	@Override
+    protected void onPause() {
+        super.onPause();
+        if (adView!=null){
+            adView.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adView!=null){
+            adView.resume();
+        }
+    }
 
 
     @Override
@@ -428,37 +467,6 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 布局元素获取必须在成功的时候绑定，需要在加载成功后对布局进行操作，最后调用nativeAd.registerViewForInteraction将adView, mediaView, icon, clickableViews传给nativeAd处理
-
-
-* 广告事件
-```
-        nativeAd.setAdListener(new NativeAdListener() {
-                @Override
-                public void onAdLoadSuc(Ad ad) {
-                      //广告加载成功
-                }
-
-                @Override
-                public void onAdLoadFail(ErrorCode errorCode) {
-                        //广告加载失败
-                }
-
-                @Override
-                public void onAdExposure() {
-                        //广告展示
-                }
-
-                @Override
-                public void onAdClick() {
-                    //广告点击
-                }
-
-                @Override
-                public void onAdDestroy() {
-                     //广告销毁
-                }
-            });
-```
 
 > 注意： 需要在activity destroy时销毁adview
 
@@ -481,41 +489,44 @@ public class MainActivity extends AppCompatActivity {
         String adUnitId = "xxxxxxxxx";
         interstitialAd = new InterstitialAd(this, adUnitId);
         interstitialAd.setAdListener(new InterstitialAdListener() {
-                @Override
-                public void onAdLoadSuc() {
-                      //广告加载成功
-                      interstitialAd.isReady(){
-                         interstitialAd.show();
-                      }
-                }
+            @Override
+            public void onAdLoadSuc() {
+                interstitialAd.show();
+                Toast.makeText(getContext(), "load success", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdLoadFail(ErrorCode errorCode) {
-                        //广告加载失败
-                }
+            @Override
+            public void onAdClose() {
+                Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdExposure() {
-                        //广告展示
-                }
+            @Override
+            public void onAdLoadFail(int code, String msg) {
+                Toast.makeText(getContext(), "load fail, code: " + code + "msg:" + msg, Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdClick() {
-                    //广告点击
-                }
+            @Override
+            public void onAdExposure() {
+                Toast.makeText(getContext(), "show success", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdClose() {
-                     //广告关闭
-                }
-            });
+            @Override
+            public void onRenderFail(int code, String msg) {
+                Toast.makeText(getContext(), "onRenderFail", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onAdClick() {
+                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            }
+        });
         interstitialAd.loadAd();
     }
 
 }
 ```
-
-> 注意：当请求成功后，isReady()为true，可根据此值判断广告是否准备好。
+需要在请求广告完成时再调用show方法展示广告。
 
 #### 激励视频
 ```
@@ -538,44 +549,42 @@ public class RewardedActivity extends AppCompatActivity {
         rewardedAd = new RewardedAd(this,adUnitId);
         rewardedAd.setRequestParams(map);
         rewardedAd.setAdListener(new RewardedAdListener() {
-               @Override
-               public void onAdClose() {
+            @Override
+            public void onAdClose() {
+                Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT).show();
+            }
 
-               }
+            @Override
+            public void onUserEarnedReward() {
+                Toast.makeText(getContext(), "获取奖励", Toast.LENGTH_SHORT).show();
+            }
 
-               @Override
-               public void onUserEarnedReward() {
-                          //获取奖励
-               }
+            @Override
+            public void onAdFailedToShow() {
+                Toast.makeText(getContext(), "播放失败", Toast.LENGTH_SHORT).show();
+            }
 
-               @Override
-               public void onAdFailedToShow() {
-                           //播放失败
-               }
+            @Override
+            public void onAdExposure() {
+                Toast.makeText(getContext(), "open", Toast.LENGTH_SHORT).show();
+            }
 
-               @Override
-               public void onAdExposure() {
-                          //广告展示
-               }
+            @Override
+            public void onAdClick() {
+                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            }
 
-               @Override
-               public void onAdClick() {
+            @Override
+            public void onAdLoadSuc() {
+                Toast.makeText(getContext(), "load success", Toast.LENGTH_SHORT).show();
+            }
 
-               }
-
-               @Override
-               public void onAdLoadSuc() {
-                  rewardedAd.isReady(){
-                      rewardedAd.show();
-                  }
-               }
-
-               @Override
-               public void onAdLoadFail(ErrorCode errorCode) {
-
-               }
-               });
-               rewardedAd.loadAd();
+            @Override
+            public void onAdLoadFail(int code, String msg) {
+                Toast.makeText(getContext(), "load fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+        rewardedAd.load();
 
     }
 
@@ -625,36 +634,36 @@ public class MainActivity extends AppCompatActivity {
         interactiveView.setAdUnitId(adUnitId);
         interactiveView.setCacheTime(1000 * 10);
         interactiveView.setAdListener(new InteractiveAdListener() {
-                @Override
-                public void onAdLoadSuc() {
-                      //广告加载成功
-                }
+            @Override
+            public void onRenderSuccess() {
+                Toast.makeText(getContext(), "onRenderSuccess", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdLoadFail(ErrorCode errorCode) {
-                        //广告加载失败
-                }
+            @Override
+            public void onRenderFail(int code, String msg) {
+                Toast.makeText(getContext(), "onRenderFail" + code + msg, Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onRenderSuccess() {
-                    // 渲染成功
-                }
+            @Override
+            public void onAdClick() {
+                Toast.makeText(getContext(), "onAdClick", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onRenderFail(String s, int i) {
-                       // 渲染失败
-                }
+            @Override
+            public void onAdClose() {
+                Toast.makeText(getContext(), "onAdClose", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdClick() {
-                    //广告点击
-                }
+            @Override
+            public void onAdLoadSuc() {
+                Toast.makeText(getContext(), "onAdLoadSuc", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAdClose() {
-                     //广告关闭
-                }
-            });
+            @Override
+            public void onAdLoadFail(int code, String msg) {
+                Toast.makeText(getContext(), "onAdLoadFail" + code + msg, Toast.LENGTH_SHORT).show();
+            }
+        });
         interactiveView.loadAd();
     }
 
@@ -679,7 +688,59 @@ interactiveView.onDestroy()
 1.互动广告需要尽早的调用，如可在进入app时进行互动广告加载，在需要展示互动广告时，把view添加到布局上面去。
 2.广告回调onAdExposure时，则webview已经加载完成。
 
+### 闪屏广告
+在APP的启动页面Activity的onCreate方法中调用以下代码：
 
+```
+
+String unitid = "a839bc20-6592-11ed-b410-4365750446c9";  // 申请到的unitid
+// 创建 OpenScreenAd 实例，传入当前页面的context，广告unitid
+OpenScreenAd openScreenAd = new OpenScreenAd(SplashActivity.this, unitid);
+
+// 监听
+openScreenAd.setAdListener(new OpenScreenAdListener() {
+@Override
+public void onAdExposure() {
+
+        }
+
+@Override
+public void onRenderFail(int code, String msg) {
+
+        }
+
+@Override
+public void onAdClick() {
+
+        }
+
+@Override
+public void onAdClose() {
+        startActivity(new Intent(SplashActivity.this,DemoActivity.class));
+        finish();
+        }
+
+@Override
+public void onAdLoadSuc() {
+        openScreenAd.show();
+        }
+
+@Override
+public void onAdLoadFail(int code, String msg) {
+
+        }
+});
+
+
+
+//  展示闪屏广告
+openScreenAd.show();
+
+```
+
+> 注意：
+> 仅需要在onAdClose回调中处理进入首页的逻辑，当广告回调失败时，不需要再次在onAdLoadFail处理进入首页的代码。
+> 需要在设置监听的之后调用show()方法展示广告。
 ### 竞价
 SDK支持竞价功能
 ```
@@ -1547,23 +1608,20 @@ FlatNativeAd.showAd(unitId);
 |40201 | 参数错误|empty appid or sign|
 
 ### 客户端错误码
-|状态码（status）| 说明 |描述（msg)|
-|:-----|:-----|:-----|
-|-1|未知错误 |unknown mistake|
-|2001|SKD初始化失败 |The SDK initialization error|
-|2002|SDK没有初始化 |The SDK uninitialized|
-|3001|没有网络 |There is no network|
-|3002|网络异常 |Network anomalies|
-|4001|广告 unitId 为空|Ad unitId is empty|
-|4002|返回空广告信息数据|Return empty ad information data|
-|4003 | 加载物料失败|Failed to load material|
-|4004 | 广告未准备好|Ads not ready|
-|4005 | 解析response错误|Response to parse failure|
-|5001|数据结构异常|The server-side data error|
-|5002|广告位不存在|Advertising does not exist|
-|5003|adx 流控|Adx curations|
-|5004|没有匹配的广告返回|There is no matching advertising|
-|5005|签名验证失败|Signature verification failed|
+|状态码（status）| 说明              | 描述（msg)                                      |
+|:-----|:----------------|:---------------------------------------------|
+|1001| 未知错误            | Unknown error                                |
+|2001| SKD初始化失败        | The SDK initialization error                 |
+|2002| 模拟器环境           | is Multi Box                                 |
+|4001| 广告 unitId 为空    | Ad unitId is empty                           |
+|4002| 返回空广告信息数据       | No Ads                                       |
+|4003 | 加载物料失败          | Load Ad res Failed                           |
+|4004 | 广告未准备好          | Ads not ready                                |
+|4005 | 解析response错误    | Ad parse error                               |
+|4006| 加载广告异常          | Ad load too frequently or AppContext is null |
+|4007| webview未安装      | WebView not install                          |
+|4008| 上报webview js的日志 | WebView Error            |
+|4009| 没有可用的广告数据       | There is no available data             |
 
 
 
