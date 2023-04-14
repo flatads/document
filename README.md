@@ -102,6 +102,7 @@ dependencies {
 allprojects {
     repositories {
         maven {url "http://maven.flat-ads.com/repository/maven-public/"}
+        maven { url = "https://jitpack.io" }
     }
 }
 
