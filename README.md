@@ -94,20 +94,21 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.4.10-gp-20230206.101701-56'
+   implementation("com.flatads.sdk:flatads:1.4.15")
 }
 
 //
 
 allprojects {
     repositories {
-        maven {url "http://maven.flat-ads.com/repository/maven-public/"}
+        maven {url "http://maven-pub.flat-ads.com/repository/maven-public/"}
         maven { url  "https://jitpack.io" }
     }
 }
 
 //混淆规则
 -keep class com.flatads.sdk.response.* {*;}
+-keep class com.flatads.sdk.core.data.model.** {*;}
 ```
 
 初始化SDK
