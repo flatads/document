@@ -94,7 +94,7 @@
 
 ```
 dependencies {
-   implementation("com.flatads.sdk:flatads:1.4.15")
+   implementation 'com.flatads.sdk:flatads:1.4.17.3-GP'
 }
 
 //
@@ -109,6 +109,11 @@ allprojects {
 //混淆规则
 -keep class com.flatads.sdk.response.* {*;}
 -keep class com.flatads.sdk.core.data.model.** {*;}
+-keep class com.flatads.sdk.core.data.model.**$* { *;}
+-keep class com.flatads.sdk.core.base.model.**$* { *;}
+-keep class com.flatads.sdk.response.**$* { *;}
+-keep class com.flatads.sdk.channel.online.omsdk.imp.** {*;}
+-keep class com.flatads.sdk.channel.channel.** { *;}
 ```
 
 初始化SDK
