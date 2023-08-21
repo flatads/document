@@ -2,11 +2,9 @@ package com.flatads.interactive;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,7 +29,6 @@ import com.flatads.sdk.callback.NativeAdListener;
 import com.flatads.sdk.callback.RewardedAdListener;
 import com.flatads.sdk.config.SdkConfig;
 import com.flatads.sdk.response.Ad;
-import com.flatads.sdk.statics.ErrorCode;
 import com.flatads.sdk.ui.view.BannerAdView;
 import com.flatads.sdk.ui.view.InteractiveView;
 import com.flatads.sdk.ui.view.MediaView;
@@ -75,7 +72,7 @@ public class FlatActivity extends Activity implements View.OnClickListener {
             public void onFailure(int code, String msg) {
 
             }
-        });
+        }, new SdkConfig());
 
         Button bidding = findViewById(R.id.bidding_btn);
         Button load = findViewById(R.id.load_btn);
@@ -130,8 +127,18 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                             }
 
                             @Override
-                            public void onAdLoadFail(ErrorCode errorCode) {
+                            public void onAdLoadFail(int i, String s) {
                                 Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onRenderFail(int i, String s) {
+                                Toast.makeText(FlatActivity.this, "onRenderFail", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onRefresh() {
+
                             }
                         });
                         bannerAdView.setBannerSize(BannerAdView.SMALL_LAYOUT);
@@ -159,7 +166,7 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                             }
 
                             @Override
-                            public void onAdLoadFail(ErrorCode errorCode) {
+                            public void onAdLoadFail(int i, String s) {
                                 Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
                             }
 
@@ -176,6 +183,11 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                             @Override
                             public void onAdDestroy() {
                                 Toast.makeText(FlatActivity.this, "destroy", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onRenderFail(int i, String s) {
+                                Toast.makeText(FlatActivity.this, "onRenderFail", Toast.LENGTH_SHORT).show();
                             }
                         });
                     });
@@ -200,13 +212,18 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                             }
 
                             @Override
-                            public void onAdLoadFail(ErrorCode errorCode) {
+                            public void onAdLoadFail(int i, String s) {
                                 Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onAdExposure() {
                                 Toast.makeText(FlatActivity.this, "show success", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onRenderFail(int i, String s) {
+                                Toast.makeText(FlatActivity.this, "onRenderFail", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -256,7 +273,7 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                             }
 
                             @Override
-                            public void onAdLoadFail(ErrorCode errorCode) {
+                            public void onAdLoadFail(int i, String s) {
                                 Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -293,8 +310,18 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onAdLoadFail(ErrorCode errorCode) {
+                        public void onAdLoadFail(int i, String s) {
                             Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onRenderFail(int i, String s) {
+                            Toast.makeText(FlatActivity.this, "onRenderFail", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onRefresh() {
+
                         }
                     });
                     bannerAdView.setAdUnitId(getSelectItem(ad_id));
@@ -310,7 +337,7 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onAdLoadFail(ErrorCode errorCode) {
+                        public void onAdLoadFail(int i, String s) {
                             Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
                         }
 
@@ -327,6 +354,11 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void onAdDestroy() {
                             Toast.makeText(FlatActivity.this, "destroy", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onRenderFail(int i, String s) {
+                            Toast.makeText(FlatActivity.this, "onRenderFail", Toast.LENGTH_SHORT).show();
                         }
                     });
                     nativeAd.loadAd();
@@ -345,7 +377,7 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onAdLoadFail(ErrorCode errorCode) {
+                        public void onAdLoadFail(int i, String s) {
                             Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
                         }
 
@@ -357,6 +389,11 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void onAdClick() {
                             Toast.makeText(FlatActivity.this, "click", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onRenderFail(int i, String s) {
+                            Toast.makeText(FlatActivity.this, "onRenderFail", Toast.LENGTH_SHORT).show();
                         }
                     });
                     interstitialAd.loadAd();
@@ -395,15 +432,13 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onAdLoadFail(ErrorCode errorCode) {
+                        public void onAdLoadFail(int i, String s) {
                             Toast.makeText(FlatActivity.this, "load fail", Toast.LENGTH_SHORT).show();
                         }
                     });
                     rewardedAd.loadAd();
                 } else {
                     interactiveView.setAdUnitId(getSelectItem(ad_id));
-//                    interactiveView.setCacheTime(1000 * 10);
-//                    interactiveView.setIconView(getResources().getDrawable(R.mipmap.flat_ic_info));
                     interactiveView.setAdListener(new InteractiveAdListener() {
                         @Override
                         public void onRenderSuccess() {
@@ -411,8 +446,8 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onRenderFail(String msg, int code) {
-                            Toast.makeText(FlatActivity.this, "onRenderFail" + msg + code, Toast.LENGTH_SHORT).show();
+                        public void onRenderFail(int i, String s) {
+                            Toast.makeText(FlatActivity.this, "onRenderFail" + i + s, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -431,8 +466,8 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onAdLoadFail(ErrorCode errorCode) {
-                            Toast.makeText(FlatActivity.this, "onAdLoadFail" + errorCode.getCode() + errorCode.getMsg(), Toast.LENGTH_SHORT).show();
+                        public void onAdLoadFail(int i, String s) {
+                            Toast.makeText(FlatActivity.this, "onAdLoadFail" + i + s, Toast.LENGTH_SHORT).show();
                         }
                     });
                     interactiveView.loadAd();
@@ -443,7 +478,9 @@ public class FlatActivity extends Activity implements View.OnClickListener {
                     frameLayout = findViewById(R.id.native_ad);
                     if (isBiddingNative && nativeAd != null) nativeAd.loadAd();
                     frameLayout.removeAllViews();
-                    frameLayout.addView(adView);
+                    if (adView != null) {
+                        frameLayout.addView(adView);
+                    }
                 } else if (getSelectItem(ad_text).equals("interstitial")) {
                     if (interstitialAd == null) return;
                     interstitialAd.show();
@@ -464,6 +501,7 @@ public class FlatActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @SuppressLint("InflateParams")
     private void inflateAd(Ad ad) {
 
         adView = (NativeAdLayout) getLayoutInflater().inflate(R.layout.native_layout, null);

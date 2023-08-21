@@ -92,16 +92,22 @@
 ### 添加依赖和初始化
 添加依赖
 
+根据业务需求选择对应渠道
+
 ```
 dependencies {
+    // GP渠道
    implementation 'com.flatads.sdk:flatads:1.4.17.3-GP'
+   
+   // 线下渠道
+   implementation 'com.flatads.sdk:flatads:1.4.17.3'
 }
 
 //
 
 allprojects {
     repositories {
-        maven {url "http://maven-pub.flat-ads.com/repository/maven-public/"}
+        maven {url "https://maven-pub.flat-ads.com/repository/maven-public/"}
         maven { url  "https://jitpack.io" }
     }
 }
@@ -110,14 +116,21 @@ allprojects {
 -keep class com.flatads.sdk.response.* {*;}
 -keep class com.flatads.sdk.core.data.model.** {*;}
 -keep class com.flatads.sdk.core.data.model.**$* { *;}
--keep class com.flatads.sdk.core.base.model.**$* { *;}
 -keep class com.flatads.sdk.response.**$* { *;}
 -keep class com.flatads.sdk.channel.online.omsdk.imp.** {*;}
 -keep class com.flatads.sdk.channel.channel.** { *;}
+-keep class com.flatads.sdk.channel.offline.download.FlatApkDownloadImp{
+    public <init>();
+}
+-keep class com.flatads.sdk.core.data.network.HttpProviderImp { *;}
+-keep class com.flatads.sdk.library.errorcollector.ErrorCollectorImp { *;}
+-keep class com.flatads.sdk.channel.channel.base.FlatDownloaderImp { *;}
+-keep class com.flatads.sdk.core.data.network.FlatFileManagerImp { *;}
+-keep class com.flatads.sdk.core.data.source.config.FlatConfig { *;}
 ```
 
 初始化SDK
-```
+```Java
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -136,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code, String msg) {
             }
-        };
+        }, new SdkConfig());
     }
     
 }
