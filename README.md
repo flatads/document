@@ -757,6 +757,11 @@ public void onAdLoadFail(int code, String msg) {
 openScreenAd.show();
 
 ```
+设置加载超时时间：根据业务需要，传入超时时间，单位ms，超时区间为100ms-5000ms
+```
+// 如果需要配置超时时间，需要在loadAd之前调用以下方法
+openScreenAd.setTimeout(1000L);
+```
 
 > 注意：
 > 仅需要在onAdClose回调中处理进入首页的逻辑，当广告回调失败时，不需要再次在onAdLoadFail处理进入首页的代码。
