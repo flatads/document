@@ -764,7 +764,6 @@ openScreenAd.setTimeout(1000L);
 ```
 
 > 注意：
-> 仅需要在onAdClose回调中处理进入首页的逻辑，当广告回调失败时，不需要再次在onAdLoadFail处理进入首页的代码。
 > 需要在设置监听的之后调用show()方法展示广告。
 ### 竞价
 SDK支持竞价功能
