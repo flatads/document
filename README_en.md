@@ -6,8 +6,7 @@ Please contact your account manager to create a Flat Ads developer account for y
 1. After entering the developer background, you need to create APP/Site and its Placement for your account first.
 ![Alt text](./flat_image/1620963109747.png)
 2. Enter the new pop-up window and type down the information of your APP. The definition of the fields to fill in are as follows
-
-![Alt text](./flat_image/1620964293507.png)___
+![Alt text](./flat_image/1620964293507.png)
 
 
 > Type: whether the traffic type is APP traffic or Web Site traffic;
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 Ad must be called after initialization is complete!
 
 When initializing SDK, you need to pass in the appid and token of the APP, which can be found in the Placement management page in your account background.
- ![Alt text](./flat_image/1621243376897.png)
+![Alt text](./flat_image/1621243376897.png)
 
 ### Ad Placement Type
 #### Banner 

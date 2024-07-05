@@ -6,8 +6,7 @@
 1. 进入开发者后台后，您需要先为您的账号创建APP/Site及其Placement.
 ![Alt text](./flat_image/1620963109747.png)
 2. 进入新建弹窗，输入您APP的相关信息, 填写的字段释义如下
-
-![Alt text](./flat_image/1620964293507.png)___
+![Alt text](./flat_image/1620964293507.png)
 
 
 > Type: 流量类型是APP流量还是Web Site流量；
