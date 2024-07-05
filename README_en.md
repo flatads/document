@@ -1,98 +1,97 @@
-# Flat Ads SDK入门指南
-欢迎您选择Flat Ads对接合作，这篇文档将指引您如何操作开发者后台并对接我们的SDK开始您的广告变现，如果您有任何问题请联系您的客户经理。
-### 创建账号
-请联系您的客户经理为您创建Flat Ads 开发者账号。
-### 创建APP和广告位
-1. 进入开发者后台后，您需要先为您的账号创建APP/Site及其Placement.
+# Flat Ads SDK Start Guide
+Welcome to cooperate with Flat Ads. This document will guide you how to operate the developer background and start your ad realization with our SDK. If you have any questions, please contact your account manager.
+### Create an account
+Please contact your account manager to create a Flat Ads developer account for you.
+### Create APP and Ads Placement
+1. After entering the developer background, you need to create APP/Site and its Placement for your account first.
 ![Alt text](./flat_image/1620963109747.png)
-2. 进入新建弹窗，输入您APP的相关信息, 填写的字段释义如下
+2. Enter the new pop-up window and type down the information of your APP. The definition of the fields to fill in are as follows
 
 ![Alt text](./flat_image/1620964293507.png)___
 
 
-> Type: 流量类型是APP流量还是Web Site流量；
+> Type: whether the traffic type is APP traffic or Web Site traffic;
 > 
-> Platform：APP的系统平台，是Android还是IOS，如果是Windows之类的请选择其他；
+> Platform: whether the system platform of APP is Android or IOS, if it is Windows or others, please select "other";
 > 
-> Bundle：APP的包名；（如果您的Android APP已上架，填写包名后点击Look up，将自动填充Store URL和APP Category）
+> Bundle: the package name of the APP; (If your Android APP has already been published, fill in the package name and click "Look up",  the Store URL and APP Category will be automatically filled in)
 > 
-> Store URL：APP上架商店的详情页链接；
+> Store URL: the detailed page link of the APP on the APP store;
 > 
-> Domain：Site的域名；
+> Domain: the domain name of the site;
 > 
-> App Categroy：APP的分类；
+> App Categroy: the category of your APP;
 > 
-> Is app published：您的APP是否已上架；
+> Is app published: whether your APP is available in the APP store;
 
-> Status：APP/Site的状态，如果状态为关，其Appid和token将不再生效；
+> Status: the status of the APP/Site. If the status is "off", its Appid and token will no longer be effective;
 > 
-> COPPA：如果您的APP/Site遵守COPPA，请勾选上；
+> COPPA: If your APP/Site complies with COPPA, please tick the box;
 > 
-> TOKEN和Appid：为对接SDK时的验证密钥，新建APP后，自动生成。
+> TOKEN and Appid: the verification key when connecting to the SDK. After creating an APP, it will be automatically generated.
 > 
 
-3. 完成APP/Site的填写后，保存继续为其创建广告位，填写的字段释义如下
+3. After filling the APP/Site, save the information and continue to create Ad placement for it. The definition of the fields to fill in are as follows
 ![Alt text](./flat_image/1620964462690.png)
 
-> App/Site：当前创建广告位的归属，一个App/Site可以拥有多个广告位；
+> App/Site: the owner of the current Ad placement. One App/Site can have multiple Ad placements;
 > 
-> Name：广告位的名称，一般可以命名为"APPNAME_TYPE_SIZE"；
+> Name: the name of the Ad placement, generally can be named as "APPNAME_TYPE_SIZE";
 > 
-> Bid Floor：广告位的底价，只有高于这个底价的广告才会填充；
+> Floor Bid: the floor price of the Ad placement, only the ads higher than the floor price will be filled;
 > 
-> Placement Type：广告位类型，Banner, Native, Interstitial, Rewarded Ad；
+> Placement Type: the type of the Ad placement, including Banner, Native, Interstitial, Rewarded Ad;
 > 
-> Size：广告位尺寸；
+> Size: the size of Ad placement;
 > 
-> Allowed Ad Type：支持填充的广告类型；Display(HTML), Static, VAST Video, Playable；
+> Allowed Ad Type: the types of ads that can be filled, including Display(HTML), Static, VAST Video, Playable;
 > 
-> Refresh Time：Banner广告自动刷新时间；
+> Refresh Time:  the automatic refresh time of Banner ad;
 > 
-> Muting：视频广告是否默认静音；
+> Muting: whether the video ads is muted by default;
 > 
-> Allow Skip：允许跳过的时间，单位为秒；
+> Allow Skip: The time allowed to skip, the measurement unit is second;
 > 
-> CTA Popup：是否在视频播放过程中弹出CTA按钮，一般能够提升CTR，但是可能遮罩视频元素；
+> CTA Popup : whether to pop up CTA button during video playback, this choice is generally able to increase CTR but may mask video elements;
 > 
-> Status：广告位状态，状态为关时，广告位将不再请求广告；
+> Status: the status of the Ad placement. When the status is off, the Ad placement will no longer request ads;
 > 
 
-### 集成Flat Ads SDK
-保存广告位后，就可以进入集成SDK的环节。Flat Ads SDK支持Android。同时如果您对接了Mopub聚合SDK，我们也只支持Mopub JS Tag作为自定义网盟接入。如果你是Site流量，也可以直接部署我们的JS Tag
-![Alt text](./flat_image/1620983112998.png)
+### Flat Ads SDK Integration
+After saving the Ad placement, you can enter SDK integration. Android is supported in Flat Ads SDK. f you connect to the Mopub aggregation SDK at the same time, we also only support Mopub JS Tag access as a customized network alliance. If you are Site traffic, you can also directly deploy our JS Tag![Alt text](./flat_image/1620983112998.png)
 
-### 报表说明
-跑出数据后，可以通过报表查看收益数据情况，以下是维度指标的说明
+### Statement Description
+When the data are processed, you can view the earnings data through the report. The instructions of the dimension indicators are as follows
 ![Alt text](./flat_image/1620989538211.png)
 
-> 维度
+> Dimension
 > 
-> Date：日期
+> Date: the date
 > 
-> App/Site：APP或者是Site
+> App/Site: App or Site
 > 
-> Placement：广告位
+> Placement: Ad placement
 > 
-> Country：国家
+> Country: country
 > 
-> 指标
+> Indicators
 > 
-> Impression：广告展示
+> Impression: Advertising Display
 > 
-> Clicks：广告点击
+> Clicks: Ad clicks
 > 
-> CTR：广告点击率，Clicks/Impression
+> CTR: Ads click-through rate, Clicks/Impression
 > 
-> eCPM：每千次展示单价，Revenue/Impression*1000
+> eCPM: unit price per thousand displays, Revenue/Impression * 1000
 > 
-> Revenue：广告收益
+> Revenue: Ads Revenue
 > 
 
 # Android SDK
-### 添加依赖和初始化
-添加依赖
+### Adding Dependencies and Initialization
+Add Dependency
 
-根据业务需求选择对应渠道
+Select corresponding channels according to service needs
 
 ```
 dependencies {
@@ -108,14 +107,11 @@ allprojects {
     }
 }
 
-//代码混淆
-如果您需要使用proguard混淆代码，需确保不要混淆SDK的代码
-**注意**: SDK代码被混淆后会导致广告无法展现或者其它异常
-
+//ProGuard
 -keep class com.flatads.sdk.** {*;} 
 ```
 
-初始化SDK
+SDK Initialization
 ```Java
 public class MainActivity extends AppCompatActivity {
 
@@ -124,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        String appId = "xxxxxxxx"; //申请时的appid
-        String token = "xxxxxxxxxxxxxxxx"; //申请时的token
+        String appId = "xxxxxxxx"; 
+        String token = "xxxxxxxxxxxxxxxx"; 
         
         FlatAdSDK.initialize(getApplication(), appId, token, new InitListener(){
             @Override
@@ -141,14 +137,14 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-广告必须在初始化完成后调用！
+Ad must be called after initialization is complete!
 
-初始化SDK时，需要传入APP的appid和token，这两个值可以在你的账户后台Placement管理页面中找到
+When initializing SDK, you need to pass in the appid and token of the APP, which can be found in the Placement management page in your account background.
  ![Alt text](./flat_image/1621243376897.png)
 
-### 广告位类型
+### Ad Placement Type
 #### Banner 
-* 使用Banner广告，需要向布局中添加BannerAdView
+* When using Banner ads, you need to add BannerAdView to the layout
 ```
 # main_activity.xml
     ···
@@ -159,10 +155,9 @@ public class MainActivity extends AppCompatActivity {
         app:banner_size="small_size"/>
     ···
 ```
-app:banner_size：将此属性设置为要使用的广告尺寸。提供了2种类型的banner尺寸：small_size (320x50) 和 big_size (300x250)。不设置默认为big_size (300x250)。
-布局中需给广告位设置 match_parent。提供了setBannerSize方法，该方法对布局进行操作，所以必须在主线程中执行。
+App: banner_size: Set this property to the ad size you want to use. Two types of banner sizes are provided: small_size (320x50) and big_size (300x250). If not set, the default is  big_size (300x250). In the layout, match_parent needs to be set for the Ad placement. The setBannerSize method is provided, and because it operates on the layout, it must be executed in the main thread.
 
-MainActivity中，需要设置广告的unitid，并且调用loadAd()，展示广告。
+In the MainActivity, you need to set the ad's unitid and call loadAd() to display the ad.
 ```
 public class MainActivity extends AppCompatActivity {
 
@@ -171,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String appId = "xxxxxxxx"; //申请时的appid
-        String token = "xxxxxxxxxxxxxxxx"; //申请时的token
+        String appId = "xxxxxxxx"; 
+        String token = "xxxxxxxxxxxxxxxx"; 
 
         FlatAdSDK.initialize(getApplication(), appId, token, new InitListener(){
             @Override
@@ -215,50 +210,43 @@ public class MainActivity extends AppCompatActivity {
 
 }
 ```
-* 需要监听广告相关回调事件，在相关的AdView添加Listener。
+* You need to listen to ad-related callback events and add Listener to the relevant AdView.
 ```
     bannerAdView.setAdListener(new BannerAdListener() {
         @Override
         public void onAdExposure() {
-            // 广告曝光
         }
 
         @Override
         public void onRenderFail(int code, String msg) {
-            // 广告渲染失败
         }
 
 
         @Override
         public void onAdClick() {
-            // 点击广告
         }
 
         @Override
         public void onAdClose() {
-            // 广告关闭
         }
 
         @Override
         public void onAdLoadSuc() {
-            // 广告请求成功
         }
 
         @Override
         public void onAdLoadFail(int code, String msg) {
-            // 广告请求失败
         }
 
         @Override
         public void onRefresh() {
-            //  自动刷新回调
         }
     });
 ```
 
 #### Native
-native显示样式由用户自定义，但需要调用NativeAdLayout使用做处理，其中媒体用MediaView加载。NativeAdLayout为FrameLayout。
-* 向布局中添加NativeAdLayout和MediaView
+The display style of native is user-defined, but you need to call the NativeAdLayout to use for processing, where the media is loaded by MediaView. The NativeAdLayout is FrameLayout . 
+* Add NativeAdLayout and MediaView to the layout
 
 ```
 # main_activity.xml
@@ -364,7 +352,7 @@ native显示样式由用户自定义，但需要调用NativeAdLayout使用做处
 </com.flatads.sdk.ui.view.NativeAdLayout>
 
 ```
-MediaView需要设置宽高比例。
+You need to set the width to height ratio in MediaView.
 
 
 ```
@@ -376,8 +364,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String appId = "xxxxxxxx"; //申请时的appid
-        String token = "xxxxxxxxxxxxxxxx"; //申请时的token
+        String appId = "xxxxxxxx"; 
+        String token = "xxxxxxxxxxxxxxxx"; 
 
         FlatAdSDK.initialize(getApplication(), appId, token, new InitListener(){
             @Override
@@ -473,12 +461,12 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
-布局元素获取必须在成功的时候绑定，需要在加载成功后对布局进行操作，最后调用nativeAd.registerViewForInteraction将adView, mediaView, icon, clickableViews传给nativeAd处理
+Element retrieval in the layout must be bound upon success. Operations on the layout are required after loading is successful. Lastly, call nativeAd.registerViewForInteraction, and  hand over adView, mediaView, icon, clickableViews for nativeAd to process.
+> Note: You need to destroy the adview at activity destroy
 
-> 注意： 需要在activity destroy时销毁adview
 
+* When an advertisement is drawn out in the list, it is necessary to unbind the advertisement View and release the View object.
 
-* 当广告在瀑布流列表中划出时, 需要解绑广告View并进行View对象的释放
 
 ```java
 nativeAd?.destroyView()
@@ -486,21 +474,21 @@ adView?.destroy()
 adView = null
 ```
 
-* 当广告重新回到屏幕中时, 在Adapter的onBindViewHolder()中重新绑定即可
+* When the ad returns to the screen, just rebind it in onBindViewHolder() of the Adapter
 
 ```java
 @Override
 public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    // 从缓存中获取广告对象 nativeAd
-    // 从ViewHolder获取复用的AdView
+    // Get the advertising object nativeAd from the cache
+    // Get the reused AdView from ViewHolder
     ...
-    // 绑定广告View和广告对象
+    // Bind advertising View and advertising object
     nativeAd.registerViewForInteraction(adView, mediaView, icon, clickableViews);
     ...
 }
 ```
 
-* 单独跟页面使用时, 广告跟页面的生命周期绑定
+* When used alone with a page, the advertisement is bound to the life cycle of the page.
 
 ```java
 
@@ -535,9 +523,9 @@ protected void onDestroy() {
 ```
 
 
-布局元素获取必须在成功的时候绑定，处理完布局后需要调用nativeAd.registerViewForInteraction()方法展示广告，否则无反应。
+The layout element acquisition must be bound when successful. After processing the layout, the nativeAd.registerViewForInteraction() method needs to be called to display the advertisement, otherwise there will be no response.
 
-由于native广告存在video类型的广告，需要在Activity生命周期中对应添加广告的生命周期回调，否则播放器可能会异常。
+Since native ads include video-type ads, the life cycle callback of the ad needs to be added in the Activity life cycle, otherwise the player may be abnormal.
 
 
 #### Interstitial
@@ -551,8 +539,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String appId = "xxxxxxxx"; //申请时的appid
-        String token = "xxxxxxxxxxxxxxxx"; //申请时的token
+        String appId = "xxxxxxxx"; 
+        String token = "xxxxxxxxxxxxxxxx"; 
 
         FlatAdSDK.initialize(getApplication(), appId, token, new InitListener(){
             @Override
@@ -598,9 +586,9 @@ public class MainActivity extends AppCompatActivity {
 
 }
 ```
-需要在请求广告完成时再调用show方法展示广告。
+You need to call the show method to display the ad when the request for ad is completed. 
 
-#### 激励视频
+#### Reward Video
 ```
 public class RewardedActivity extends AppCompatActivity {
 
@@ -655,28 +643,27 @@ public class RewardedActivity extends AppCompatActivity {
 
 }
 ```
-* 广告展示
+* Advertising display
 
-通过rewardedAd.show()方法展示激励广告
+Display rewarded ads through the rewardedAd.show() method
 
 ```java
 rewardedAd.show();
 ```
-> 注意：当请求成功后，isReady()为true，可根据此值判断广告是否准备好。
-加载激励广告前。需要传入激励广告的相关信息（以上是测试数据）
+> Note: When the request is successful, isReady() will be true, which can be used to determine whether the ad is ready. Before loading reward ads, information of the reward ads is required (the above is test data)
 
-|  字段名称   | 类型  |  取值（举例）  |  说明  |字段名称|
+|  Field Name   | Type  |  Value (Example)  |  Description  ||
 |  ----  | ----  | ----  | ----  | ----  |
-| customer_id  | string |1234567|受激励的客户id|可选|
-| unique_id  | string |uihj89uijkbn7uy8|激励的唯一id|可选|
-|  reward_type   | 激励类型|add_coins|激励的类型，开发者自定义|可选|
-|  reward_value  | 激励值  |2|激励的值，开发者自定义|可选|
-| verifier  | 验证码 |tyuidjkol|接入方生产的验证码，用于回调链的验证|可选|
-| extinfo  | 额外信息 |{"self define":"xxx"}|接入方自定义||
+| customer_id  | string |1234567|ID of the rewarded customer|Optional|
+| unique_id  | string |uihj89uijkbn7uy8|Unique ID of the reward|Optional|
+|  reward_type   | Reward Type|add_coins|Type of reward, custom-defined by developer|Optional|
+|  reward_value  | Reward Value  |2|Value of reward, custom-defined by developer|Optional|
+| verifier  | Verifier |tyuidjkol|Verification code generated by the integrator for callback chain validation|Optional|
+| extinfo  | Extra Information |{"self define":"xxx"}|Custom-defined by the integrator||
 
 
-#### 互动广告
-互动广告的大小由开发者自己决定，使用时可先触发loadAd，后续再把布局添加到界面上，可以更快的显示广告内容。
+#### Interactive Ads
+The size of the interactive ads is determined by the developer. When using, loadAd can be triggered first, and then the layout can be added to the interface to display the ad content faster.
 ```
     ...
     <com.flatads.sdk.ui.view.InteractiveView
@@ -695,8 +682,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String appId = "xxxxxxxx"; //申请时的appid
-        String token = "xxxxxxxxxxxxxxxx"; //申请时的token
+        String appId = "xxxxxxxx"; 
+        String token = "xxxxxxxxxxxxxxxx"; 
 
         FlatAdSDK.initialize(getApplication(), appId, token, new InitListener(){
             @Override
@@ -743,34 +730,30 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-setCacheTime为设置缓存时间，默认为24小时。
+setCacheTime is to set the cache time. The default is 24 hours.
 
-如果开发者想指定互动广告icon图片，提供了方法设置：
+If the developer wants to specify an interactive ad icon image, a method of setting is provided:
 ```
 interactiveView.setIconView(Drawable)
 interactiveView.setIconView(Bitmap)
 interactiveView.setIconView(url)
 ```
 
-注意：Activity销毁时需要调用onDestroy方法
+Note: The onDestroy method needs to be called when destroying Activity.
 ```
 interactiveView.onDestroy()
 ```
 
-> 注意：
-1.互动广告需要尽早的调用，如可在进入app时进行互动广告加载，在需要展示互动广告时，把view添加到布局上面去。
-2.广告回调onRenderSuccess时，则webview已经加载完成。
+> Note:1. Interactive ads need to be called as soon as possible. For example, interactive ads can be loaded when entering app, and view can be added to the layout when interactive ads need to be displayed. 2. When the ad callbacks onRenderSuccess, the webview has completed loading.
 
-### 闪屏广告
-在APP的启动页面Activity的onCreate方法中调用以下代码：
+### Splash Screen Ads
+Call the following code in the onCreate method of the APP startup page Activity:
 
 ```
 
-String unitid = "xxxxxxxxx";  // 申请到的unitid
-// 创建 OpenScreenAd 实例，传入当前页面的context，广告unitid
+String unitid = "xxxxxxxxx";  
 OpenScreenAd openScreenAd = new OpenScreenAd(SplashActivity.this, unitid);
 
-// 监听
 openScreenAd.setAdListener(new OpenScreenAdListener() {
 @Override
 public void onAdExposure() {
@@ -807,20 +790,18 @@ public void onAdLoadFail(int code, String msg) {
 ```
 
 
-* 请求广告
+* Request an ad
 
-通过openScreenAd.loadAd()方法使用请求广告, 由于需要网络请求和本地资源读取，属于耗时操作，可以在开屏启动页加载，建议可以在开屏广告关闭后调用，进行预加载下一次的开屏广告。  
-
+Use the openScreenAd.loadAd() method to request ads. Since it requires network requests and local resource reading, it is a time-consuming operation. It can be loaded on the opening screen startup page. It is recommended to call it after the opening screen advertisement is closed to preload the next time. Open screen ads.
 
 ```java
 openScreenAd.loadAd();
 
 ```
 
-* 展示开屏广告
+* Show ads
 
 ```java
-//  展示闪屏广告
 private void showAdIfReady(){
    if ( openScreenAd == null || !FlatAdSDK.INSTANCE.isInit() ) return;
 
@@ -832,20 +813,19 @@ private void showAdIfReady(){
 }
 ```
 
-* openScreenAd.isReady() 是判断当前广告是否准备好可以展示，当isReady返回ture时，说明已经加载好开屏广告，可以用于展示。
+* openScreenAd.isReady() is used to determine whether the current ad is ready for display. When isReady returns true, it means that the open-screen ad has been loaded and can be used for display.
 
-* openScreenAd.show() 是打开开屏广告，show的过程不需要网络。
+* openScreenAd.show() is to open an open-screen advertisement. The show process does not require an Internet connection.
 
 
-> 注意：
-> 需要在设置监听的之后调用show()方法展示广告。
+> Note: You need to call the show() method to display ads after setting up the Listener.
 
-### 更多说明
+### More Instructions
 
-####  注意事项
+####  Precautions
 
-1. 接入时需对app开启存储权限后才可以正常下载广告配置的apk，否则部分手机将无下载反应。
-2. 混淆时，需添加 -keep class com.flatads.sdk.** {*;} ，否则将无数据返回。
+1. The apk of ad configuration can be downloaded normally only after the storage permission of app is turned on during connecting, otherwise some mobile phones will have no download response.
+2. For confusion, add -keep class com.flatads.sdk.response.* {*;}. Otherwise, no data will be returned.
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -859,7 +839,7 @@ private void showAdIfReady(){
     </base-config>
 </network-security-config>
 ```
-接着，在AndroidManifest.xml文件下的application标签增加以下属性
+Next, add the following attributes to the application tag under the AndroidManifest.xml file
 ```
 
 <application
@@ -869,31 +849,31 @@ private void showAdIfReady(){
     />
 ```
 
-# 广告响应参数说明
-### 异常状态码
-|状态码（status）| 说明 |描述（msg)|
+# Ad Response Parameter Instruction
+### Status Error Code
+|Status Code| Instruction |Description（msg)|
 |:-----|:-----|:-----|
-|40003|签名验证失败 |not validate|
-|40101|广告位不存在|Not bidding:tagid not actived|
-|40102|adx 流控|request next time please|
-|40103|没有匹配的广告返回|no ads from all dsps|
-|40201 | 参数错误|empty appid or sign|
+|40003|Signature validation failed |not validate|
+|40101|Ad placement doesn't exist|Not bidding:tagid not actived|
+|40102|adx flow control|request next time please|
+|40103|No matching ads returned|no ads from all dsps|
+|40201 | Parameter error|empty appid or sign|
 
-### 客户端错误码
-|状态码（status）| 说明              | 描述（msg)                                      |
+### Client Error Code
+|Status code（status）| Instruction              | Description（msg)                                      |
 |:-----|:----------------|:---------------------------------------------|
-|1001| 未知错误            | Unknown error                                |
-|2001| SKD初始化失败        | The SDK initialization error                 |
-|2002| 模拟器环境           | is Multi Box                                 |
-|4001| 广告 unitId 为空    | Ad unitId is empty                           |
-|4002| 返回空广告信息数据       | No Ads                                       |
-|4003 | 加载物料失败          | Load Ad res Failed                           |
-|4004 | 广告未准备好          | Ads not ready                                |
-|4005 | 解析response错误    | Ad parse error                               |
-|4006| 加载广告异常          | Ad load too frequently or AppContext is null |
-|4007| webview未安装      | WebView not install                          |
-|4008| 上报webview js的日志 | WebView Error            |
-|4009| 没有可用的广告数据       | There is no available data             |
+|1001| Unknown error            | Unknown error                                |
+|2001| SDK initialization error        | The SDK initialization error                 |
+|2002| Simulator Environment           | is Multi Box                                 |
+|4001| Ad unitId is empty    | Ad unitId is empty                           |
+|4002|  Empty ad information data returned       | No Ads                                       |
+|4003 | Ad resource loading failed          | Load Ad res Failed                           |
+|4004 | Ad not ready          | Ads not ready                                |
+|4005 | Ad parsing error    | Ad parse error                               |
+|4006| Ad loading error          | Ad load too frequently or AppContext is null |
+|4007| webView not installed      | WebView not install                          |
+|4008| webview js log reported | WebView Error            |
+|4009| No ad data available       | There is no available data             |
 
 
 
