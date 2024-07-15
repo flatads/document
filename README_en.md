@@ -796,7 +796,7 @@ openScreenAd.loadAd();
 
 ```
 
-* Display ths Ad
+* Display the Ad
 
 ```java
 private void showAdIfReady(){
