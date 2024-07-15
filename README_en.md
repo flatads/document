@@ -37,7 +37,7 @@ Please contact your account manager to create a Flat Ads developer account for y
 > 
 > Name: the name of the Ad placement, generally can be named as "APPNAME_TYPE_SIZE";
 > 
-> Floor Bid: the floor price of the Ad placement, only the ads higher than the floor price will be filled;
+> Bid Floor: the floor price of the Ad placement, only the ads higher than the floor price will be filled;
 > 
 > Placement Type: the type of the Ad placement, including Banner, Native, Interstitial, Rewarded Ad;
 > 
@@ -57,7 +57,8 @@ Please contact your account manager to create a Flat Ads developer account for y
 > 
 
 ### Flat Ads SDK Integration
-After saving the Ad placement, you can enter SDK integration. Android is supported in Flat Ads SDK. f you connect to the Mopub aggregation SDK at the same time, we also only support Mopub JS Tag access as a customized network alliance. If you are Site traffic, you can also directly deploy our JS Tag![Alt text](./flat_image/1620983112998.png)
+After saving the Ad placement, you can enter the SDK integration. Flat Ads SDK currently only supports Android app access. At the same time, if you have connected to Mopub aggregation SDK, we also support Mopub JS Tag as a custom network alliance access. If you are a site traffic, you can also directly deploy our JS Tag  
+![Alt text](./flat_image/1620983112998.png)
 
 ### Statement Description
 When the data are processed, you can view the earnings data through the report. The instructions of the dimension indicators are as follows
@@ -89,8 +90,6 @@ When the data are processed, you can view the earnings data through the report. 
 # Android SDK
 ### Adding Dependencies and Initialization
 Add Dependency
-
-Select corresponding channels according to service needs
 
 ```
 dependencies {
@@ -789,7 +788,7 @@ public void onAdLoadFail(int code, String msg) {
 ```
 
 
-* Request an ad
+* Load Ad
 
 Use the openScreenAd.loadAd() method to request ads. Since it requires network requests and local resource reading, it is a time-consuming operation. It can be loaded on the opening screen startup page. It is recommended to call it after the opening screen advertisement is closed to preload the next time. Open screen ads.
 
@@ -798,7 +797,7 @@ openScreenAd.loadAd();
 
 ```
 
-* Show ads
+* Display ths Ad
 
 ```java
 private void showAdIfReady(){
@@ -806,8 +805,6 @@ private void showAdIfReady(){
 
    if (openScreenAd.isReady() ){
        openScreenAd.show();
-   }else{
-       openScreenAd.loadAd();
    }
 }
 ```

@@ -57,7 +57,7 @@
 > 
 
 ### 集成Flat Ads SDK
-保存广告位后，就可以进入集成SDK的环节。Flat Ads SDK支持Android。同时如果您对接了Mopub聚合SDK，我们也只支持Mopub JS Tag作为自定义网盟接入。如果你是Site流量，也可以直接部署我们的JS Tag
+保存广告位后，就可以进入集成SDK的环节。Flat Ads SDK目前仅支持Android应用接入。同时如果您对接了Mopub聚合SDK，我们也只支持Mopub JS Tag作为自定义网盟接入。如果你是Site流量，也可以直接部署我们的JS Tag
 ![Alt text](./flat_image/1620983112998.png)
 
 ### 报表说明
@@ -90,8 +90,6 @@
 # Android SDK
 ### 添加依赖和初始化
 添加依赖
-
-根据业务需求选择对应渠道
 
 ```
 dependencies {
@@ -825,8 +823,6 @@ private void showAdIfReady(){
 
    if (openScreenAd.isReady() ){
        openScreenAd.show();
-   }else{
-       openScreenAd.loadAd();
    }
 }
 ```
