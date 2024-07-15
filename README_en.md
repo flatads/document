@@ -30,7 +30,7 @@ Please contact your account manager to create a Flat Ads developer account for y
 > TOKEN and Appid: the verification key when connecting to the SDK. After creating an APP, it will be automatically generated.
 > 
 
-3. After filling the APP/Site, save the information and continue to create Ad placement for it. The definition of the fields to fill in are as follows
+3. After filling the APP/Site, save the information and continue to create Ad placement for it. The definition of the fields to fill in are as follows  
 ![Alt text](./flat_image/1620964462690.png)
 
 > App/Site: the owner of the current Ad placement. One App/Site can have multiple Ad placements;
