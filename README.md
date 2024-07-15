@@ -93,10 +93,9 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.4.18.2-Flat-GP'
+    implementation 'com.flatads.sdk:flatads:1.4.18.2-Flat'
 }
 
-//
 
 allprojects {
     repositories {
