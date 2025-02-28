@@ -93,7 +93,7 @@
 
 ```
 dependencies {
-    implementation 'com.flatads.sdk:flatads:1.4.18.2-Flat'
+    implementation 'com.flatads.sdk:flatads:1.4.18.2-Flat' // 具体最新版本号请咨询商务
 }
 
 
